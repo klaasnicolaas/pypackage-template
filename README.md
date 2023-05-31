@@ -8,10 +8,12 @@ Project template for a Python Package using [Copier][copier].
 ## Feature Summary
 
 * [GitHub Actions][gh-actions] for continuous integration and publishing to PyPI
-* [black][black] for code formatting
+* [Poetry][poetry] for dependency management and packaging
+* [Thrusted publishers][thrusted] for PyPI releases
+* [Black][black] for code formatting
 * [mypy][mypy] for static type checking
 * [pytest][pytest] for testing with code coverage
-* [ruff][ruff] for linting
+* [Ruff][ruff] for linting
 * And much more!
 
 ### PEP 621 Ready
@@ -65,3 +67,4 @@ Check out the [Poetry][poetry] documentation for more information on the availab
 [poetry]: https://python-poetry.org/
 [pytest]: https://docs.pytest.org/en/latest/
 [ruff]: https://beta.ruff.rs/docs/
+[thrusted]: https://docs.pypi.org/trusted-publishers/using-a-publisher/
