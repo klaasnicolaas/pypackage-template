@@ -1,7 +1,8 @@
 # Python Package Template
 
-![License](https://img.shields.io/github/license/klaasnicolaas/pypackage-template.svg)
-[![GitHub](https://img.shields.io/github/v/release/klaasnicolaas/pypackage-template?logo=github&sort=semver)](https://github.com/klaasnicolaas/pypackage-template)
+<!-- PROJECT SHIELDS -->
+[![License][license-shield]](LICENSE)
+[![GitHub Release][releases-shield]][releases]
 
 Project template for a Python Package using [Copier][copier].
 
@@ -68,3 +69,8 @@ Check out the [Poetry][poetry] documentation for more information on the availab
 [pytest]: https://docs.pytest.org/en/latest/
 [ruff]: https://beta.ruff.rs/docs/
 [thrusted]: https://docs.pypi.org/trusted-publishers/using-a-publisher/
+
+<!-- Shields -->
+[license-shield]: https://img.shields.io/github/license/klaasnicolaas/pypackage-template.svg
+[releases-shield]: https://img.shields.io/github/release/klaasnicolaas/pypackage-template.svg
+[releases]: https://github.com/klaasnicolaas/pypackage-template/releases
