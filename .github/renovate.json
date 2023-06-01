@@ -10,6 +10,12 @@
     "automerge": true
   },
   "commitMessagePrefix": "⬆️",
+  "github-actions": {
+    "fileMatch": [
+      "^(workflow-templates|(template/)?\\.github/workflows)/[^/]+\\.ya?ml$",
+      "(^|/)action\\.ya?ml$"
+    ]
+  },
   "packageRules": [
     {
       "matchManagers": ["poetry"],
