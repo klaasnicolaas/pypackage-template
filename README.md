@@ -51,13 +51,7 @@ The project uses [Poetry][poetry] for dependencies management and packaging. Mak
 poetry install
 ```
 
-This will also generate a `poetry.lock` file, you should track this file in version control. To execute the test suite, call pytest inside Poetry's virtual environment via `poetry run`:
-
-```shell
-poetry run pytest
-```
-
-Check out the [Poetry][poetry] documentation for more information on the available commands.
+This will also generate a `poetry.lock` file, you should track this file in version control. Check out the [Poetry][poetry] documentation for more information on the available commands.
 
 
 <!-- Links -->
