@@ -48,6 +48,9 @@
 - name: "cleanup"
   color: ef75d5
   description: "Cleanup of code."
+- name: "sync"
+  color: 00a6ed
+  description: "Syncing with upstream github config repository."
 
 - name: "security"
   color: ee0701
