@@ -63,7 +63,7 @@ After this Renovate will create a GitHub issue in your repository which serves a
 
 Automatically generate release notes with the [Release Drafter](https://github.com/release-drafter/release-drafter) workflow. This uses the labels from issues and pull requests to draft pretty and detailed release notes for your GitHub releases.
 
-## Start developing
+## Start developing on this template
 
 The project uses [Poetry][poetry] for dependencies management and packaging. Make sure you have it installed in your development machine. To install the development dependencies in a virtual environment, type:
 
@@ -79,6 +79,14 @@ This project uses [pre-commit](https://pre-commit.com/) to run some checks befor
 
 ```shell
 pre-commit install
+```
+
+## Test changes on copier
+
+If you would like to test locally with copier to see what the output is, you can use the command below. So that you can be sure that it takes all changes into account.
+
+```bash
+copier -r HEAD ./ path/to/destination
 ```
 
 ## License
