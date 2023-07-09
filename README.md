@@ -11,6 +11,7 @@ This project has been set up to quickly and easily set up a new Python package p
 * [GitHub Actions][gh-actions] for continuous integration and publishing to PyPI
 * [Poetry][poetry] for dependency management and packaging
 * [Thrusted publishers][thrusted] for PyPI releases
+* [Dev Containers][devcontainer] for easy development in VS Code
 * [Renovate Bot][renovate] for dependency updates
 * [Black][black] for code formatting
 * [mypy][mypy] for static type checking
@@ -94,6 +95,7 @@ Distributed under the **MIT** License. See [`LICENSE`](LICENSE) for more informa
 [ruff]: https://beta.ruff.rs/docs/
 [thrusted]: https://docs.pypi.org/trusted-publishers/using-a-publisher/
 [renovate]: https://docs.renovatebot.com/
+[devcontainer]: https://code.visualstudio.com/docs/remote/containers
 
 <!-- Shields -->
 [license-shield]: https://img.shields.io/github/license/klaasnicolaas/pypackage-template.svg
