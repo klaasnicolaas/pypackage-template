@@ -4,7 +4,7 @@ version = "0.0.0"
 description = "{{ project_short_description }}"
 authors = ["{{ author_name }} <{{ author_email }}>"]
 maintainers = ["{{ author_name }} <{{ author_email }}>"]
-license = {text = "
+license = "
     {%- if software_license == "Apache License 2.0" -%}
     Apache-2.0
     {%- elif software_license == "Artistic License 2.0" -%}
@@ -69,7 +69,7 @@ license = {text = "
     Unlicense
     {%- elif software_license == "zlib License" -%}
     Zlib
-    {%- endif %}"}
+    {%- endif %}"
 readme = "README.md"
 homepage = "https://github.com/{{ github_username }}/python-{{ project_slug }}"
 repository = "https://github.com/{{ github_username }}/python-{{ project_slug }}"
