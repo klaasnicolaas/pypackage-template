@@ -75,12 +75,14 @@ run_poetry_install:
 initial_commit:
   type: bool
   help: "Create an initial commit with the generated {{ package_name }}?"
+  when: "{{ run_poetry_install == true }}"
   default: false
 
 # Pre-commit hooks
 setup_pre_commit:
   type: bool
   help: "Setup pre-commit hooks (requires pre-commit)?"
+  when: "{{ run_poetry_install == true }}"
   default: false
 
 # Copier metadata
