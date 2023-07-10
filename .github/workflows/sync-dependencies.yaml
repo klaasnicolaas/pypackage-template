@@ -1,0 +1,32 @@
+---
+name: Update pyproject.toml
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  update_pyproject:
+    runs-on: ubuntu-latest
+    env:
+      START_LINE: 103
+      END_LINE: 117
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Read gist content
+        run: |
+          wget -O gist_content.txt https://gist.github.com/${{ secrets.GIST_ID }}/raw
+          echo "::set-output name=gist_contents::$(cat gist_content.txt)"
+        id: gist
+
+      - name: Replace lines in pyproject.toml.j2
+        run: |
+          sed -i '${{ env.START_LINE }},${{ env.END_LINE }}d' template/pyproject.toml.j2
+          sed -i '${{ env.START_LINE }}i ${{ steps.gist.outputs.gist_contents }}' template/pyproject.toml.j2
+
+      - name: Show changes
+        run: |
+          git diff
