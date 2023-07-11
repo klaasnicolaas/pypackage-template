@@ -90,6 +90,9 @@ jobs:
     steps:
       - name: ⤵️ Checkout Code
         uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.repository.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: ⤵️ Download artifact
         uses: actions/download-artifact@v3
@@ -101,5 +104,4 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           add: "template/${{ env.FILE_NAME }}"
-          push: origin HEAD:${{ github.head_ref }}
           message: "🔄 Sync dev dependencies from gist"
