@@ -1,32 +1,104 @@
 ---
-name: Update pyproject.toml
+name: Sync template dependencies
 
 # yamllint disable-line rule:truthy
 on:
   pull_request:
   workflow_dispatch:
 
-jobs:
-  update_pyproject:
-    runs-on: ubuntu-latest
-    env:
-      START_LINE: 103
-      END_LINE: 117
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+env:
+  FILE_NAME: pyproject.toml.j2
 
-      - name: Read gist content
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Checkout Code
+        uses: actions/checkout@v3
+
+      - name: 📝 Log the current file
+        run: |
+          cat template/${{ env.FILE_NAME }}
+
+      - name: ⤵️ Fetch Gist content
         run: |
           wget -O gist_content.txt https://gist.github.com/${{ secrets.GIST_ID }}/raw
-          echo "::set-output name=gist_contents::$(cat gist_content.txt)"
-        id: gist
+          cat gist_content.txt
 
-      - name: Replace lines in pyproject.toml.j2
+      - name: 🚀 Replace lines in file
         run: |
-          sed -i '${{ env.START_LINE }},${{ env.END_LINE }}d' template/pyproject.toml.j2
-          sed -i '${{ env.START_LINE }}i ${{ steps.gist.outputs.gist_contents }}' template/pyproject.toml.j2
+          FILE=template/pyproject.toml.j2
 
-      - name: Show changes
+          # Find the starting position (line number) of dev.dependencies
+          START_LINE=$(grep -n "dev.dependencies" $FILE | cut -d: -f1)
+          START_LINE=$(($START_LINE + 1))
+
+          # Find the end position (line number) of the first blank line after start position
+          END_LINE=$(awk -v start="$START_LINE" '/^$/ && NR > start {print NR-1; exit}' $FILE)
+
+          # Replace the lines between start and end position
+          awk -v start=$START_LINE -v end=$END_LINE '
+            NR < start || NR > end {print}
+            NR == start {
+              while ((getline < "gist_content.txt") > 0) {
+                if ($0) print
+              }
+            }
+          ' $FILE > temp && mv temp $FILE
+
+      - name: 📝 Log the updated file
         run: |
-          git diff
+          cat template/${{ env.FILE_NAME }}
+
+      - name: ⬆️ Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.FILE_NAME }}
+          path: template/${{ env.FILE_NAME }}
+
+  check-on-changes:
+    needs: update-dependencies
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.check-changes.outputs.changed }}
+    steps:
+      - name: ⤵️ Checkout Code
+        uses: actions/checkout@v3
+
+      - name: ⤵️ Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.FILE_NAME }}
+          path: template
+
+      - name: 🔍 Check if file has changed
+        id: check-changes
+        run: |
+          if git diff --quiet -- template/${{ env.FILE_NAME }}; then
+            echo "No changes detected in ${{ env.FILE_NAME }}"
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            git diff --template=template/${{ env.FILE_NAME }}
+            echo "Changes detected in ${{ env.FILE_NAME }}"
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+  commit-and-push:
+    needs: check-on-changes
+    if: needs.check-on-changes.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Checkout Code
+        uses: actions/checkout@v3
+
+      - name: ⤵️ Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.FILE_NAME }}
+          path: template
+
+      - name: 🚀 Commit and push changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: "template/${{ env.FILE_NAME }}"
+          message: "🔄 Sync dev dependencies from gist"
