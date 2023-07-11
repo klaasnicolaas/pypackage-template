@@ -73,7 +73,7 @@ poetry install
 
 This will also generate a `poetry.lock` file, you should track this file in version control. Check out the [Poetry][poetry] documentation for more information on the available commands.
 
-## Pre-commit hooks
+### Pre-commit hooks
 
 This project uses [pre-commit](https://pre-commit.com/) to run some checks before committing code. To install the pre-commit hooks, run the following command in the poetry environment:
 
@@ -81,13 +81,17 @@ This project uses [pre-commit](https://pre-commit.com/) to run some checks befor
 pre-commit install
 ```
 
-## Test changes on copier
+### Test changes on copier
 
 If you would like to test locally with copier to see what the output is, you can use the command below. So that you can be sure that it takes all changes into account.
 
 ```bash
 copier -r HEAD ./ path/to/destination
 ```
+
+### Keep template dependencies up to date
+
+The [pyproject.toml](./template/pyproject.toml.j2) file of the template has a jinja2 extension and is therefore not seen by Renovate bot to update automatically. That's why I keep track of the dependencies separately in a [Gist](https://gist.github.com/klaasnicolaas/323975ac4f173087a979209cd1c8f202) and a [workflow](./.github/workflows/sync-dependencies.yaml) will check every week if anything needs to be adjusted.
 
 ## License
 
