@@ -101,4 +101,5 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           add: "template/${{ env.FILE_NAME }}"
+          push: origin HEAD:${{ github.head_ref }}
           message: "🔄 Sync dev dependencies from gist"
