@@ -78,7 +78,7 @@ jobs:
             echo "No changes detected in ${{ env.FILE_NAME }}"
             echo "changed=false" >> $GITHUB_OUTPUT
           else
-            git diff --template=template/${{ env.FILE_NAME }}
+            git diff -- template/${{ env.FILE_NAME }}
             echo "Changes detected in ${{ env.FILE_NAME }}"
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
