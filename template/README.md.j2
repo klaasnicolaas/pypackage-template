@@ -115,12 +115,39 @@ poetry run pytest
 
 ## License
 
-COMPLETE HERE
+{% if software_license == 'MIT License' -%}
+MIT License
+
+Copyright (c) {{ '%Y' | strftime }} {{ author_name }}
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+{% else %}
+Distributed under the **{{software_license}}**. See [`LICENSE`](LICENSE) for more information.
+{% endif %}
+
+<!-- LINKS FROM PLATFORM -->
+
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [build-shield]: https://github.com/{{github_username}}/python-{{project_slug}}/actions/workflows/tests.yaml/badge.svg
 [build-url]: https://github.com/{{github_username}}/python-{{project_slug}}/actions/workflows/tests.yaml
-[codecov-shield]: https://codecov.io/gh/{{github_username}}/python-{{project_slug}}/branch/main/graph/badge.svg?token=
+[codecov-shield]: https://codecov.io/gh/{{github_username}}/python-{{project_slug}}/branch/main/graph/badge.svg?token=TOKEN
 [codecov-url]: https://codecov.io/gh/{{github_username}}/python-{{project_slug}}
 [commits-shield]: https://img.shields.io/github/commit-activity/y/{{github_username}}/python-{{project_slug}}.svg
 [commits-url]: https://github.com/{{github_username}}/python-{{project_slug}}/commits/main
@@ -130,7 +157,7 @@ COMPLETE HERE
 [downloads-url]: https://pypistats.org/packages/{{project_slug}}
 [last-commit-shield]: https://img.shields.io/github/last-commit/{{github_username}}/python-{{project_slug}}.svg
 [license-shield]: https://img.shields.io/github/license/{{github_username}}/python-{{project_slug}}.svg
-[maintainability-shield]: https://api.codeclimate.com/v1/badges//maintainability
+[maintainability-shield]: https://api.codeclimate.com/v1/badges/TOKEN/maintainability
 [maintainability-url]: https://codeclimate.com/github/{{github_username}}/python-{{project_slug}}/maintainability
 [maintenance-shield]: https://img.shields.io/maintenance/yes/{{ '%Y' | strftime }}.svg
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-experimental-yellow.svg
