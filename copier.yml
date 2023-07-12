@@ -86,7 +86,7 @@ setup_pre_commit:
   default: false
 
 # Copier metadata
-_min_copier_version: "7.0.0"
+_min_copier_version: "8.1.0"
 _subdirectory: template
 _templates_suffix: .j2
 _tasks:
