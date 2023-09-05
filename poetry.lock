@@ -52,13 +52,13 @@ files = [
 
 [[package]]
 name = "copier"
-version = "8.2.0"
+version = "8.3.0"
 description = "A library for rendering project templates."
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "copier-8.2.0-py3-none-any.whl", hash = "sha256:578fa73dcfe0aa5b99c79a618e377e2a6243fcc85982205d59c92d0074d7cd01"},
-    {file = "copier-8.2.0.tar.gz", hash = "sha256:9f68afbe3ae2776e61ec8b1cf35743376abd47630e3a81f21e2ffb6dd537a66f"},
+    {file = "copier-8.3.0-py3-none-any.whl", hash = "sha256:a708e9b7c0eb7363ee5935f7a96a63a6f39b6da1d36f1c931d1ebd7711bb2ecf"},
+    {file = "copier-8.3.0.tar.gz", hash = "sha256:051149721c811bfa84023fca5c23827917ac5f42ab6c2696dcb522b17aee7cae"},
 ]
 
 [package.dependencies]
@@ -785,4 +785,4 @@ dev = ["doc8", "flake8", "flake8-import-order", "rstcheck[sphinx]", "sphinx"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "ade9a9d43d978ee26a4e4e31efb405b707b0cda36c28121c76f16052a8618028"
+content-hash = "60adb827015761f3974f533be54dfbbffa5fdccb91cdbca362e0376e6bd71817"
