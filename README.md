@@ -65,7 +65,15 @@ Automatically generate release notes with the [Release Drafter](https://github.c
 
 ## Start developing on this template
 
-The project uses [Poetry][poetry] for dependencies management and packaging. Make sure you have it installed in your development machine. To install the development dependencies in a virtual environment, type:
+This Python template project relies on [Poetry][poetry] as its dependency manager,
+providing comprehensive management and control over project dependencies.
+
+You need at least:
+
+- Python 3.10+
+- [Poetry][poetry-install]
+
+Install all packages, including all development requirements:
 
 ```shell
 poetry install
