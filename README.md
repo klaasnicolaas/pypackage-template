@@ -13,10 +13,9 @@ This project has been set up to quickly and easily set up a new Python package p
 * [Thrusted publishers][thrusted] for PyPI releases
 * [Dev Containers][devcontainer] for easy development in VS Code
 * [Renovate Bot][renovate] for dependency updates
-* [Black][black] for code formatting
 * [mypy][mypy] for static type checking
 * [pytest][pytest] for testing with code coverage
-* [Ruff][ruff] for linting
+* [Ruff][ruff] for linting and code formatting
 * And much more!
 
 ## Create a new project
@@ -106,7 +105,6 @@ The [pyproject.toml](./template/pyproject.toml.j2) file of the template has a ji
 Distributed under the **MIT** License. See [`LICENSE`](LICENSE) for more information.
 
 <!-- Links -->
-[black]: https://black.readthedocs.io/en/stable/
 [copier]: https://copier.readthedocs.io/en/stable/
 [gh-actions]: https://github.com/features/actions
 [mypy]: https://mypy.readthedocs.io/en/stable/
@@ -116,6 +114,8 @@ Distributed under the **MIT** License. See [`LICENSE`](LICENSE) for more informa
 [thrusted]: https://docs.pypi.org/trusted-publishers/using-a-publisher/
 [renovate]: https://docs.renovatebot.com/
 [devcontainer]: https://code.visualstudio.com/docs/remote/containers
+
+[poetry-install]: https://python-poetry.org/docs/#installation
 
 <!-- Shields -->
 [license-shield]: https://img.shields.io/github/license/klaasnicolaas/pypackage-template.svg
