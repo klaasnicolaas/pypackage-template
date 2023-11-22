@@ -34,7 +34,7 @@ A [GitHub workflow](template/.github/workflows/release.yaml.j2) is included that
 
 - Create and verify an account on [PyPI](https://pypi.org/account/register/).
 - Add a [Trusted Publisher](https://docs.pypi.org/trusted-publishers/creating-a-project-through-oidc/) to your PyPI account.
-- Create an Environments in the GitHub repository settings. Name it "`release`", choose **selected branches** and add a deployment branch rule for `main` and `v*`.
+- Create an Environment in the GitHub repository settings and name it "`release`".
 
 Now, when you [create a new release](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository#creating-a-release) from your repository, a workflow will run and deploy the code to PyPI.
 
