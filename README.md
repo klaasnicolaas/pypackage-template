@@ -20,15 +20,19 @@ This project has been set up to quickly and easily set up a new Python package p
 
 ## Create a new project
 
-_Assuming you have already [correctly installed](https://copier.readthedocs.io/en/stable/#installation) Copier._
+Ensure you have copier installed via [`pipx`](https://github.com/pypa/pipx):
 
-Choose where you would like to create your new project, run the following and answer the questions.
+```shell
+pipx install copier
+```
+
+Decide where you want to create your new project, run the following command and answer all the questions:
 
 ```shell
 copier copy --trust gh:klaasnicolaas/pypackage-template ./path/to/destination
 ```
 
-or if you want to use the latest version from the main branch:
+Or if you want to use the latest version from the main branch:
 
 ```shell
 copier copy --trust --vcs-ref=HEAD gh:klaasnicolaas/pypackage-template ./path/to/destination
