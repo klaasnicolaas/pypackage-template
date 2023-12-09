@@ -8,24 +8,34 @@ This project has been set up to quickly and easily set up a new Python package p
 
 ## Feature Summary
 
-* [GitHub Actions][gh-actions] for continuous integration and publishing to PyPI
-* [Poetry][poetry] for dependency management and packaging
-* [Thrusted publishers][thrusted] for PyPI releases
-* [Dev Containers][devcontainer] for easy development in VS Code
-* [Renovate Bot][renovate] for dependency updates
-* [mypy][mypy] for static type checking
-* [pytest][pytest] for testing with code coverage
-* [Ruff][ruff] for linting and code formatting
+* ♻️ [GitHub Actions][gh-actions] for continuous integration and publishing to PyPI
+* 📦 [Poetry][poetry] for dependency management and packaging
+* 🛡️ [Thrusted publishers][thrusted] for PyPI releases
+* 🐳 [Dev Containers][devcontainer] for easy development in VS Code
+* ⬆️ [Renovate Bot][renovate] for dependency updates
+* ✅ [mypy][mypy] for static type checking
+* 🧪 [Pytest][pytest] for testing and code coverage
+* ✍️ [Ruff][ruff] for linting and code formatting
 * And much more!
 
 ## Create a new project
 
-_Assuming you have already [correctly installed](https://copier.readthedocs.io/en/stable/#installation) Copier._
-
-Choose where you would like to create your new project, run the following and answer the questions.
+Ensure you have copier installed via [`pipx`](https://github.com/pypa/pipx):
 
 ```shell
-copier gh:klaasnicolaas/pypackage-template path/to/destination
+pipx install copier
+```
+
+Decide where you want to create your new project, run the following command and answer all the questions:
+
+```shell
+copier copy --trust gh:klaasnicolaas/pypackage-template ./path/to/destination
+```
+
+Or if you want to use the latest version from the main branch:
+
+```shell
+copier copy --trust --vcs-ref=HEAD gh:klaasnicolaas/pypackage-template ./path/to/destination
 ```
 
 ## Publishing to PyPI
@@ -62,6 +72,20 @@ After this Renovate will create a GitHub issue in your repository which serves a
 
 Automatically generate release notes with the [Release Drafter](https://github.com/release-drafter/release-drafter) workflow. This uses the labels from issues and pull requests to draft pretty and detailed release notes for your GitHub releases.
 
+## Updating
+
+Future boilerplate updates can be as simple as:
+
+```bash
+copier update --trust --skip-answered
+```
+
+In case you want to update your answers to the questions as well as update:
+
+```bash
+copier update --trust
+```
+
 ## Start developing on this template
 
 This Python template project relies on [Poetry][poetry] as its dependency manager,
@@ -86,14 +110,6 @@ This project uses [pre-commit](https://pre-commit.com/) to run some checks befor
 
 ```shell
 pre-commit install
-```
-
-### Test changes on copier
-
-If you would like to test locally with copier to see what the output is, you can use the command below. So that you can be sure that it takes all changes into account.
-
-```bash
-copier -r HEAD ./ path/to/destination
 ```
 
 ### Keep template dependencies up to date
