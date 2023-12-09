@@ -85,10 +85,15 @@ setup_pre_commit:
   when: "{{ run_poetry_install == true }}"
   default: false
 
-# Copier metadata
-_min_copier_version: "8.1.0"
+# =====================================
+# | Copier settings for this template |
+# =====================================
+_min_copier_version: "9.1.0"
+
+# The template root is found here
 _subdirectory: template
 _templates_suffix: .j2
+_message_after_copy: Your package "{{ package_name }}" has been created successfully!
 _tasks:
   # Using GitHub Sponsor
   - "{% if not github_sponsors %}rm -f .github/FUNDING.yml{% endif %}"

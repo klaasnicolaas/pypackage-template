@@ -25,7 +25,13 @@ _Assuming you have already [correctly installed](https://copier.readthedocs.io/e
 Choose where you would like to create your new project, run the following and answer the questions.
 
 ```shell
-copier gh:klaasnicolaas/pypackage-template path/to/destination
+copier copy --trust gh:klaasnicolaas/pypackage-template ./path/to/destination
+```
+
+or if you want to use the latest version from the main branch:
+
+```shell
+copier copy --trust --vcs-ref=HEAD gh:klaasnicolaas/pypackage-template ./path/to/destination
 ```
 
 ## Publishing to PyPI
@@ -62,6 +68,20 @@ After this Renovate will create a GitHub issue in your repository which serves a
 
 Automatically generate release notes with the [Release Drafter](https://github.com/release-drafter/release-drafter) workflow. This uses the labels from issues and pull requests to draft pretty and detailed release notes for your GitHub releases.
 
+## Updating
+
+Future boilerplate updates can be as simple as:
+
+```bash
+copier update --trust --skip-answered
+```
+
+In case you want to update your answers to the questions as well as update:
+
+```bash
+copier update --trust
+```
+
 ## Start developing on this template
 
 This Python template project relies on [Poetry][poetry] as its dependency manager,
@@ -86,14 +106,6 @@ This project uses [pre-commit](https://pre-commit.com/) to run some checks befor
 
 ```shell
 pre-commit install
-```
-
-### Test changes on copier
-
-If you would like to test locally with copier to see what the output is, you can use the command below. So that you can be sure that it takes all changes into account.
-
-```bash
-copier -r HEAD ./ path/to/destination
 ```
 
 ### Keep template dependencies up to date
