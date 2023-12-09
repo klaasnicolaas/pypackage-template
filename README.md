@@ -8,14 +8,14 @@ This project has been set up to quickly and easily set up a new Python package p
 
 ## Feature Summary
 
-* [GitHub Actions][gh-actions] for continuous integration and publishing to PyPI
-* [Poetry][poetry] for dependency management and packaging
-* [Thrusted publishers][thrusted] for PyPI releases
-* [Dev Containers][devcontainer] for easy development in VS Code
-* [Renovate Bot][renovate] for dependency updates
-* [mypy][mypy] for static type checking
-* [pytest][pytest] for testing with code coverage
-* [Ruff][ruff] for linting and code formatting
+* ♻️ [GitHub Actions][gh-actions] for continuous integration and publishing to PyPI
+* 📦 [Poetry][poetry] for dependency management and packaging
+* 🛡️ [Thrusted publishers][thrusted] for PyPI releases
+* 🐳 [Dev Containers][devcontainer] for easy development in VS Code
+* ⬆️ [Renovate Bot][renovate] for dependency updates
+* ✅ [mypy][mypy] for static type checking
+* 🧪 [Pytest][pytest] for testing and code coverage
+* ✍️ [Ruff][ruff] for linting and code formatting
 * And much more!
 
 ## Create a new project
