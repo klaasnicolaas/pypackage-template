@@ -55,6 +55,7 @@ With every commit push to a pull request, a [GitHub workflow](template/.github/w
 - Go to the Codecov app page - https://github.com/apps/codecov
 - Click **Configure**
 - Select your repository and follow the instructions
+- Add the `CODECOV_TOKEN` secret to your repository secrets, you can find the token on the Codecov app page (required since v4.x).
 
 Future pull requests and commits will now include code coverage information.
 
