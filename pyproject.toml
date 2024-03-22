@@ -1,10 +1,10 @@
 [tool.poetry]
 name = "pypackage-template"
-version = "0.0.0"
 description = "A template for generating a Python package"
 authors = ["Klaas Schoute <hello@student-techlife.com>"]
 license = "MIT"
 readme = "README.md"
+package-mode = false
 packages = [
   { include = "template"},
 ]
