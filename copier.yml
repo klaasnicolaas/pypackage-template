@@ -47,38 +47,50 @@ software_license:
     - MIT License
     - Mozilla Public License 2.0
 
-# GitHub Sponsors
+# GitHub Sponsors - question
 github_sponsors:
   type: bool
   help: "Use GitHub Sponsors?"
   default: true
 
-# Tweet on release
+# Ko-fi sponsor - question
+kofi_funding:
+  type: bool
+  help: "Use Ko-fi?"
+  default: true
+
+# Ko-fi username - input
+kofi_username:
+  type: str
+  help: "Ko-fi username"
+  when: "{{ kofi_funding == true }}"
+
+# Tweet on release - question
 tweet_on_release:
   type: bool
   help: "Sending tweets on release?"
   default: true
 
-# Twitter username
+# Twitter username - input
 twitter_username:
   type: str
   help: "Twitter username (without @)"
   when: "{{ tweet_on_release == true }}"
 
-# Poetry install
+# Poetry install - question
 run_poetry_install:
   type: bool
   help: "Run poetry install after {{ package_name }} generation?"
   default: true
 
-# Initial commit
+# Initial commit - question
 initial_commit:
   type: bool
   help: "Create an initial commit with the generated {{ package_name }}?"
   when: "{{ run_poetry_install == true }}"
   default: false
 
-# Pre-commit hooks
+# Pre-commit hooks - question
 setup_pre_commit:
   type: bool
   help: "Setup pre-commit hooks (requires pre-commit)?"
@@ -95,8 +107,13 @@ _subdirectory: template
 _templates_suffix: .j2
 _message_after_copy: Your package "{{ package_name }}" has been created successfully!
 _tasks:
-  # Using GitHub Sponsor
-  - "{% if not github_sponsors %}rm -f .github/FUNDING.yml{% endif %}"
+  # Remove Github Sponsor line from FUNDING.yml
+  - "{% if not github_sponsors %}sed -i '/github:/d' .github/FUNDING.yml{% endif %}"
+  # Remove Ko-fi line from FUNDING.yml
+  - "{% if not kofi_funding %}sed -i '/ko_fi:/d' .github/FUNDING.yml{% endif %}"
+  # Remove FUNDING.yml if neither GitHub Sponsor nor Ko-fi is chosen
+  - "{% if not github_sponsors and not kofi_funding %}rm -f .github/FUNDING.yml{% endif %}"
+
   # Run poetry install
   - "{% if run_poetry_install %}poetry install{% endif %}"
   # Initial commit
