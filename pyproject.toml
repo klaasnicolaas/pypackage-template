@@ -16,7 +16,7 @@ python = "^3.11"
 codespell = "2.2.6"
 copier = "9.2.0"
 pre-commit = "3.7.0"
-pre-commit-hooks = "4.5.0"
+pre-commit-hooks = "4.6.0"
 yamllint = "1.35.1"
 
 [build-system]
