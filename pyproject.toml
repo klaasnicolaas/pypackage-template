@@ -13,7 +13,7 @@ packages = [
 python = "^3.11"
 
 [tool.poetry.group.dev.dependencies]
-codespell = "2.2.6"
+codespell = "2.3.0"
 copier = "9.2.0"
 pre-commit = "3.7.1"
 pre-commit-hooks = "4.6.0"
