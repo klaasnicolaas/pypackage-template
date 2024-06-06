@@ -29,13 +29,13 @@ pipx install copier
 Decide where you want to create your new project, run the following command and answer all the questions:
 
 ```shell
-copier copy --trust gh:klaasnicolaas/pypackage-template ./path/to/destination
+copier copy --trust gh:klaasnicolaas/pypackage-template ~/path/to/destination
 ```
 
 Or if you want to use the latest version from the main branch:
 
 ```shell
-copier copy --trust --vcs-ref=HEAD gh:klaasnicolaas/pypackage-template ./path/to/destination
+copier copy --trust --vcs-ref=HEAD gh:klaasnicolaas/pypackage-template ~/path/to/destination
 ```
 
 ## Publishing to PyPI
