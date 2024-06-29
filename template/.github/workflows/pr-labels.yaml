@@ -3,7 +3,7 @@ name: PR Labels
 
 # yamllint disable-line rule:truthy
 on:
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - labeled
@@ -19,8 +19,6 @@ jobs:
       - name: 🏷 Verify PR has a valid label
         uses: klaasnicolaas/action-pr-labels@v2.0.0
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          pr-number: ${{ github.event.pull_request.number }}
           valid-labels: >-
             breaking-change, bugfix, documentation, enhancement, sync,
             refactor, performance, new-feature, maintenance, ci, dependencies
