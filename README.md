@@ -107,10 +107,10 @@ This will also generate a `poetry.lock` file, you should track this file in vers
 
 ### Pre-commit hooks
 
-This project uses [pre-commit](https://pre-commit.com/) to run some checks before committing code. To install the pre-commit hooks, run the following command in the poetry environment:
+This project uses [pre-commit](https://pre-commit.com/) to run some checks before committing code. To install the pre-commit hooks, run the following command:
 
 ```shell
-pre-commit install
+poetry run pre-commit install
 ```
 
 ### Keep template dependencies up to date
