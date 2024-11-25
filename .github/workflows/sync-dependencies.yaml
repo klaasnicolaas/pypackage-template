@@ -14,7 +14,7 @@ env:
 jobs:
   update-dependencies:
     runs-on: ubuntu-latest
-    if: ${{ github.head_ref == 'renovate/lock-file-maintenance' or github.event_name == 'workflow_dispatch' }}
+    if: ${{ github.head_ref == 'renovate/lock-file-maintenance' || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: ⤵️ Checkout Code
         uses: actions/checkout@v4.2.2
