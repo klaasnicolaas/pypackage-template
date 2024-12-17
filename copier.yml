@@ -108,9 +108,9 @@ _templates_suffix: .j2
 _message_after_copy: Your package "{{ package_name }}" has been created successfully!
 _tasks:
   # Remove Github Sponsor line from FUNDING.yml
-  - "{% if not github_sponsors %}sed -i '/github:/d' .github/FUNDING.yml{% endif %}"
+  - "{% if not github_sponsors %}sed -i '' '/github:/d' .github/FUNDING.yml{% endif %}"
   # Remove Ko-fi line from FUNDING.yml
-  - "{% if not kofi_funding %}sed -i '/ko_fi:/d' .github/FUNDING.yml{% endif %}"
+  - "{% if not kofi_funding %}sed -i '' '/ko_fi:/d' .github/FUNDING.yml{% endif %}"
   # Remove FUNDING.yml if neither GitHub Sponsor nor Ko-fi is chosen
   - "{% if not github_sponsors and not kofi_funding %}rm -f .github/FUNDING.yml{% endif %}"
 
