@@ -1,9 +1,9 @@
-[tool.poetry]
+[project]
 name = "{{ project_slug }}"
 version = "0.0.0"
 description = "{{ project_short_description }}"
-authors = ["{{ author_name }} <{{ author_email }}>"]
-maintainers = ["{{ author_name }} <{{ author_email }}>"]
+authors = [{ name="{{ author_name }}", email="<{{ author_email }}>"}]
+maintainers = [{name="{{ author_name }}", email="<{{ author_email }}>"}]
 license = "
     {%- if software_license == "Apache License 2.0" -%}
     Apache-2.0
@@ -70,10 +70,8 @@ license = "
     {%- elif software_license == "zlib License" -%}
     Zlib
     {%- endif %}"
+requires-python = ">=3.11"
 readme = "README.md"
-homepage = "https://github.com/{{ github_username }}/python-{{ project_slug }}"
-repository = "https://github.com/{{ github_username }}/python-{{ project_slug }}"
-documentation = "https://github.com/{{ github_username }}/python-{{ project_slug }}"
 keywords = ["{{ project_slug }}", "api", "async", "client"]
 classifiers = [
   "Framework :: AsyncIO",
@@ -86,6 +84,7 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
+dynamic = ["dependencies"]
 packages = [
   { include = "{{ package_name }}", from = "src"},
 ]
@@ -95,7 +94,10 @@ aiohttp = ">=3.0.0"
 python = "^3.11"
 yarl = ">=1.6.0"
 
-[tool.poetry.urls]
+[project.urls]
+homepage = "https://github.com/{{ github_username }}/python-{{ project_slug }}"
+repository = "https://github.com/{{ github_username }}/python-{{ project_slug }}"
+documentation = "https://github.com/{{ github_username }}/python-{{ project_slug }}"
 "Bug Tracker" = "https://github.com/{{ github_username }}/python-{{ project_slug }}/issues"
 Changelog = "https://github.com/{{ github_username }}/python-{{ project_slug }}/releases"
 
@@ -195,7 +197,6 @@ lint.ignore = [
 
   # Conflicts with the Ruff formatter
   "COM812",
-  "ISC001",
 ]
 
 [tool.ruff.lint.flake8-pytest-style]
