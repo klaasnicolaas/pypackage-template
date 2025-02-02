@@ -1,13 +1,17 @@
-[tool.poetry]
+[project]
 name = "pypackage-template"
 description = "A template for generating a Python package"
-authors = ["Klaas Schoute <hello@student-techlife.com>"]
+authors = [{ name="Klaas Schoute", email="<hello@student-techlife.com>"}]
 license = "MIT"
+requires-python = ">=3.11"
 readme = "README.md"
-package-mode = false
+dynamic = ["dependencies"]
 packages = [
   { include = "template"},
 ]
+
+[tool.poetry]
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
