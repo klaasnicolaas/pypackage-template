@@ -1,28 +1,22 @@
 [project]
 name = "pypackage-template"
+version = "0.1.0"
 description = "A template for generating a Python package"
 authors = [{ name="Klaas Schoute", email="<hello@student-techlife.com>"}]
 license = "MIT"
 requires-python = ">=3.11"
 readme = "README.md"
-dynamic = ["dependencies"]
-packages = [
-  { include = "template"},
+dependencies = [
+  "copier==9.8.0",
 ]
 
-[tool.poetry]
-package-mode = false
+[dependency-groups]
+dev = [
+  "codespell==2.4.1",
+  "pre-commit==4.2.0",
+  "pre-commit-hooks==5.0.0",
+  "yamllint==1.37.1",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-
-[tool.poetry.group.dev.dependencies]
-codespell = "2.4.1"
-copier = "9.8.0"
-pre-commit = "4.2.0"
-pre-commit-hooks = "5.0.0"
-yamllint = "1.37.1"
-
-[build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core>=1.0.0"]
+[tool.uv]
+default-groups = []
