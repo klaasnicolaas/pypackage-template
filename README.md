@@ -89,28 +89,26 @@ copier update --trust
 
 ## Start developing on this template
 
-This Python template project relies on [Poetry][poetry] as its dependency manager,
+This Python template project relies on [uv] as its dependency manager,
 providing comprehensive management and control over project dependencies.
 
 You need at least:
 
-- Python 3.11+
-- [Poetry][poetry-install]
+- [Python] 3.11+ - The programming language
+- [uv] - A python virtual environment/package manager
 
 Install all packages, including all development requirements:
 
 ```shell
-poetry install
+uv sync --dev
 ```
-
-This will also generate a `poetry.lock` file, you should track this file in version control. Check out the [Poetry][poetry] documentation for more information on the available commands.
 
 ### Pre-commit hooks
 
 This project uses [pre-commit](https://pre-commit.com/) to run some checks before committing code. To install the pre-commit hooks, run the following command:
 
 ```shell
-poetry run pre-commit install
+uv run pre-commit install
 ```
 
 ### Keep template dependencies up to date
@@ -132,7 +130,8 @@ Distributed under the **MIT** License. See [`LICENSE`](LICENSE) for more informa
 [renovate]: https://docs.renovatebot.com/
 [devcontainer]: https://code.visualstudio.com/docs/remote/containers
 
-[poetry-install]: https://python-poetry.org/docs/#installation
+[uv]: https://docs.astral.sh/uv/
+[Python]: https://www.python.org/
 
 <!-- Shields -->
 [license-shield]: https://img.shields.io/github/license/klaasnicolaas/pypackage-template.svg
