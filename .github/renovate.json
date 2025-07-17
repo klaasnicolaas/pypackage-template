@@ -1,14 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "timezone": "Europe/Amsterdam",
-  "schedule": [
-    "before 6am every weekday"
-  ],
+  "schedule": ["before 6am every weekday"],
   "rebaseWhen": "behind-base-branch",
   "dependencyDashboard": true,
-  "labels": [
-    "dependencies"
-  ],
+  "labels": ["dependencies"],
   "lockFileMaintenance": {
     "enabled": true,
     "automerge": true
@@ -22,51 +18,29 @@
   },
   "packageRules": [
     {
-      "matchManagers": [
-        "poetry"
-      ],
-      "addLabels": [
-        "python"
-      ]
+      "matchManagers": ["pep621"],
+      "addLabels": ["python"]
     },
     {
-      "matchManagers": [
-        "poetry"
-      ],
-      "matchDepTypes": [
-        "dev"
-      ],
+      "matchManagers": ["pep621"],
+      "matchDepTypes": ["dev"],
       "rangeStrategy": "pin"
     },
     {
-      "matchManagers": [
-        "poetry"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ],
+      "matchManagers": ["pep621"],
+      "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
     },
     {
-      "matchManagers": [
-        "github-actions"
-      ],
-      "addLabels": [
-        "github_actions"
-      ],
+      "matchManagers": ["github-actions"],
+      "addLabels": ["github_actions"],
       "rangeStrategy": "pin",
       "extractVersion": "^(?<version>v\\d+\\.\\d+\\.\\d+)$",
       "versioning": "regex:^v(?<major>\\d+)(\\.(?<minor>\\d+)\\.(?<patch>\\d+))?$"
     },
     {
-      "matchManagers": [
-        "github-actions"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ],
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
     }
   ]
