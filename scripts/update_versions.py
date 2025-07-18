@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 import requests
+from packaging.version import InvalidVersion, Version
 
 VERSIONS_PATH = Path("versions.json")
 
@@ -33,7 +34,7 @@ def split_operator_version(spec: str) -> tuple[str, str]:
         tuple[str, str]: A tuple containing the operator and version.
 
     """
-    match = re.match(r"^([<>=!~^]{1,2})(.+)$", spec)
+    match = re.match(r"^([<>=!~^]{1,2})?(.+)$", spec)
     if not match:
         return "", spec
     return match.group(1), match.group(2)
@@ -57,40 +58,75 @@ def fetch_latest_pypi_version(package: str) -> str:
         resp = requests.get(url, timeout=5)
         resp.raise_for_status()
         return resp.json()["info"]["version"]
-    except requests.exceptions.ConnectionError as err:
-        msg = f"Failed to connect to PyPI for package '{package}'. Please check your network connection."  # noqa: E501
-
-        raise RuntimeError(msg) from err
-    except requests.exceptions.Timeout as err:
-        msg = f"Request to PyPI for package '{package}' timed out. Please try again later."  # noqa: E501
-        raise RuntimeError(msg) from err
-    except requests.exceptions.HTTPError as err:
-        msg = f"HTTP error occurred while fetching package '{package}' from PyPI: {err}"
-        raise RuntimeError(msg) from err
     except requests.exceptions.RequestException as err:
-        msg = f"An error occurred while fetching package '{package}' from PyPI: {err}"
-        raise RuntimeError(msg) from err
+        raise RuntimeError(f"Failed to fetch {package} from PyPI: {err}") from err  # noqa: EM102
+
+
+def get_minor_range(version: str) -> str:
+    """Get the minor version range for a given version string.
+
+    Args:
+        version (str): The version string to process.
+
+    Returns:
+        str: A string representing the minor version range, e.g., ">=1.2.0".
+
+    Raises:
+        ValueError: If the version string is invalid.
+
+    """
+    try:
+        v = Version(version)
+    except InvalidVersion as err:
+        raise ValueError(f"Invalid version string: {version}") from err  # noqa: EM102
+    else:
+        return f">={v.major}.{v.minor}.0"
+
+
+def format_version(
+    version: str,
+    operator: str,
+    patch_only: bool,  # noqa: FBT001
+) -> str:
+    """Format a version string with an operator.
+
+    Args:
+        version (str): The version string to format.
+        operator (str): The operator to prepend to the version.
+        patch_only (bool): If True, return a minor version range.
+
+    Returns:
+        str: The formatted version string.
+
+    """
+    return (
+        get_minor_range(version)
+        if patch_only
+        else f"{operator}{version}"
+        if operator
+        else version
+    )
 
 
 def update_spec(
     name: str,
     spec: str | dict[str, str],
+    patch_only: bool = False,  # noqa: FBT001, FBT002
 ) -> tuple[str | dict[str, str], bool, str, str]:
     """Update a version specifier to the latest PyPI version."""
-    if isinstance(spec, str):
-        operator, current = split_operator_version(spec)
-        latest = fetch_latest_pypi_version(name)
-        new_spec = f"{operator}{latest}" if operator else latest
-        return new_spec, current != latest, f"{operator}{current}", new_spec
+    original = spec["version"] if isinstance(spec, dict) else spec
+    operator, _ = split_operator_version(original)
 
-    if isinstance(spec, dict) and "version" in spec:
-        operator, current = split_operator_version(spec["version"])
-        latest = fetch_latest_pypi_version(name)
-        updated_version = f"{operator}{latest}" if operator else latest
-        new_spec = {**spec, "version": updated_version}
-        return new_spec, current != latest, f"{operator}{current}", updated_version
+    latest = fetch_latest_pypi_version(name)
+    new_version = format_version(latest, operator, patch_only)
 
-    return spec, False, "", ""
+    changed = original != new_version
+    before = original
+    after = new_version
+
+    if isinstance(spec, dict):
+        return {**spec, "version": new_version}, changed, before, after
+    return new_version, changed, before, after
 
 
 def main() -> None:
@@ -112,29 +148,23 @@ def main() -> None:
     LOGGER.info("📦 Checking for updated versions...")
 
     for group, deps in versions.items():
+        patch_only = group == "main"
         updated[group] = {}
+
         for name, spec in deps.items():
             try:
-                new_spec, changed, before, after = update_spec(name, spec)
+                new_spec, changed, before, after = update_spec(
+                    name, spec, patch_only=patch_only
+                )
                 updated[group][name] = new_spec
 
                 if changed:
                     has_updates = True
                     LOGGER.info(
-                        "✅ [UPDATE]   %-20s (%s) %s → %s",
-                        name,
-                        group,
-                        before,
-                        after,
+                        "✅ [UPDATE]   %-20s (%s) %s → %s", name, group, before, after
                     )
                 else:
-                    LOGGER.info(
-                        "➖ [UNCHANGED] %-20s (%s) %s",  # noqa: RUF001
-                        name,
-                        group,
-                        before or spec,
-                    )
-
+                    LOGGER.info("➖ [UNCHANGED] %-20s (%s) %s", name, group, before)  # noqa: RUF001
             except Exception:
                 LOGGER.exception("❌ [ERROR]     %-20s (%s)", name, group)
                 updated[group][name] = spec
