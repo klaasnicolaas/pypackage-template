@@ -107,7 +107,7 @@ Changelog = "https://github.com/{{ github_username }}/python-{{ project_slug }}/
 {%- if spec is string %}
 {{ name }} = "{{ spec }}"
 {%- elif spec.version is defined and spec.extras is defined %}
-{{ name }} = { version = "{{ spec.version }}", extras = [{{ spec.extras | join(', ') | replace("'", '"') }}] }
+{{ name }} = { version = "{{ spec.version }}", extras = {{ spec.extras | tojson }} }
 {%- elif spec.version is defined %}
 {{ name }} = { version = "{{ spec.version }}" }
 {%- else %}
