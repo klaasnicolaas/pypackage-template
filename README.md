@@ -38,7 +38,7 @@ Or if you want to use the latest version from the main branch:
 copier copy --trust --vcs-ref=HEAD --data-file versions.json gh:klaasnicolaas/pypackage-template ~/path/to/destination
 ```
 
-Or clone the respository and run Copier directly:
+Or clone the repository and run Copier directly:
 
 ```shell
 uv sync

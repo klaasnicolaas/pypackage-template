@@ -24,7 +24,7 @@ dev = [
 default-groups = []
 
 [tool.ruff]
-target-version = "py313"
+target-version = "py311"
 exclude = ["template"]
 lint.select = ["ALL"]
 lint.ignore = [
