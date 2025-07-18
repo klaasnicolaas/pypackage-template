@@ -99,13 +99,11 @@ def format_version(
         str: The formatted version string.
 
     """
-    return (
-        get_minor_range(version)
-        if patch_only
-        else f"{operator}{version}"
-        if operator
-        else version
-    )
+    if patch_only:
+        return get_minor_range(version)
+    if operator:
+        return f"{operator}{version}"
+    return version
 
 
 def update_spec(
