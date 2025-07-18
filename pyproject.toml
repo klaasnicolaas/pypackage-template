@@ -2,7 +2,7 @@
 name = "pypackage-template"
 version = "0.1.0"
 description = "A template for generating a Python package"
-authors = [{ name="Klaas Schoute", email="<hello@student-techlife.com>"}]
+authors = [{ name="Klaas Schoute", email="hello@student-techlife.com"}]
 license = "MIT"
 requires-python = ">=3.11"
 readme = "README.md"
@@ -16,8 +16,34 @@ dev = [
   "codespell==2.4.1",
   "pre-commit==4.2.0",
   "pre-commit-hooks==5.0.0",
+  "ruff==0.12.4",
   "yamllint==1.37.1",
 ]
 
 [tool.uv]
 default-groups = []
+
+[tool.ruff]
+target-version = "py311"
+exclude = ["template"]
+lint.select = ["ALL"]
+lint.ignore = [
+  "ARG001",  # Unused function arguments
+  "ANN401",  # Opinionated warning on disallowing dynamically typed expressions
+
+  "D203",    # Conflicts with other rules
+  "D213",    # Conflicts with other rules
+  "D417",    # False positives in some occasions
+  "PLR2004", # Just annoying, not really useful
+  "SLOT000", # Has a bug with enums: https://github.com/astral-sh/ruff/issues/5748
+  "BLE001",  # False positives in some occasions
+  "TRY003",  # Avoid specifying long messages outside the exception
+  "EM101",   # Raw string in exception message
+
+  # Conflicts with the Ruff formatter
+  "COM812",
+  "ISC001",
+
+  # Custom ignores
+  "G004",    # Allow f-string in logging
+]
