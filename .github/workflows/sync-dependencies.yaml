@@ -1,110 +1,37 @@
 ---
-name: Sync template dependencies
+name: Update versions.json
 
 # yamllint disable-line rule:truthy
 on:
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
-
-env:
-  FILE_NAME: pyproject.toml.j2
+  schedule:
+    - cron: '0 5 * * 1' # Every Monday at 05:00
 
 jobs:
-  update-dependencies:
+  update-versions:
+    name: Update versions.json from PyPI
     runs-on: ubuntu-latest
-    if: ${{ github.head_ref == 'renovate/lock-file-maintenance' || github.event_name == 'workflow_dispatch' }}
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
-      - name: ⤵️ Checkout Code
+      - name: ⬇️ Checkout repository
         uses: actions/checkout@v4.2.2
-
-      - name: 📝 Log the current file
-        run: |
-          cat template/${{ env.FILE_NAME }}
-
-      - name: ⤵️ Fetch Gist content
-        run: |
-          wget -O gist_content.txt https://gist.github.com/${{ secrets.GIST_ID }}/raw
-          cat gist_content.txt
-
-      - name: 🚀 Replace lines in file
-        run: |
-          FILE=template/pyproject.toml.j2
-
-          # Find the starting position (line number) of dev.dependencies
-          START_LINE=$(grep -n "dev.dependencies" $FILE | cut -d: -f1)
-          START_LINE=$(($START_LINE + 1))
-
-          # Find the end position (line number) of the first blank line after start position
-          END_LINE=$(awk -v start="$START_LINE" '/^$/ && NR > start {print NR-1; exit}' $FILE)
-
-          # Replace the lines between start and end position
-          awk -v start=$START_LINE -v end=$END_LINE '
-            NR < start || NR > end {print}
-            NR == start {
-              while ((getline < "gist_content.txt") > 0) {
-                if ($0) print
-              }
-            }
-          ' $FILE > temp && mv temp $FILE
-
-      - name: 📝 Log the updated file
-        run: |
-          cat template/${{ env.FILE_NAME }}
-
-      - name: ⬆️ Upload artifact
-        uses: actions/upload-artifact@v4.6.2
+      - name: 🏗 Set up UV
+        uses: astral-sh/setup-uv@v6.3.1
         with:
-          name: ${{ env.FILE_NAME }}
-          path: template/${{ env.FILE_NAME }}
-
-  check-on-changes:
-    needs: update-dependencies
-    runs-on: ubuntu-latest
-    outputs:
-      changed: ${{ steps.check-changes.outputs.changed }}
-    steps:
-      - name: ⤵️ Checkout Code
-        uses: actions/checkout@v4.2.2
-
-      - name: ⤵️ Download artifact
-        uses: actions/download-artifact@v4.3.0
+          version: "latest"
+          enable-cache: true
+      - name: 🏗 Install workflow dependencies
+        run: uv sync
+      - name: ♻️ Run update_versions.py
+        run: uv run python scripts/update_versions.py
+      - name: 👍 Commit & create PR if changed
+        uses: peter-evans/create-pull-request@v7.0.8
         with:
-          name: ${{ env.FILE_NAME }}
-          path: template
-
-      - name: 🔍 Check if file has changed
-        id: check-changes
-        run: |
-          if git diff --quiet -- template/${{ env.FILE_NAME }}; then
-            echo "No changes detected in ${{ env.FILE_NAME }}"
-            echo "changed=false" >> $GITHUB_OUTPUT
-          else
-            git diff -- template/${{ env.FILE_NAME }}
-            echo "Changes detected in ${{ env.FILE_NAME }}"
-            echo "changed=true" >> $GITHUB_OUTPUT
-          fi
-
-  commit-and-push:
-    needs: check-on-changes
-    if: needs.check-on-changes.outputs.changed == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: ⤵️ Checkout Code
-        uses: actions/checkout@v4.2.2
-        with:
-          repository: ${{ github.event.repository.full_name }}
-          ref: ${{ github.event.pull_request.head.ref }}
-
-      - name: ⤵️ Download artifact
-        uses: actions/download-artifact@v4.3.0
-        with:
-          name: ${{ env.FILE_NAME }}
-          path: template
-
-      - name: 🚀 Commit and push changes
-        uses: EndBug/add-and-commit@v9.1.4
-        with:
-          add: "template/${{ env.FILE_NAME }}"
-          message: "🔄 Sync dev dependencies from Github Gist"
+          commit-message: "♻️ Update versions.json"
+          title: "♻️ Update versions.json"
+          body: "This PR updates dependencies in versions.json to the latest versions from PyPI."
+          branch: chore/update-versions
+          delete-branch: true
+          labels: dependencies

@@ -90,9 +90,10 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-aiohttp = ">=3.0.0"
 python = "^3.11"
-yarl = ">=1.6.0"
+{%- for name, spec in versions.main.items() %}
+{{ name }} = "{{ spec }}"
+{%- endfor %}
 
 [project.urls]
 homepage = "https://github.com/{{ github_username }}/python-{{ project_slug }}"
@@ -102,20 +103,17 @@ documentation = "https://github.com/{{ github_username }}/python-{{ project_slug
 Changelog = "https://github.com/{{ github_username }}/python-{{ project_slug }}/releases"
 
 [tool.poetry.group.dev.dependencies]
-aresponses = "3.0.0"
-codespell = "2.4.1"
-covdefaults = "2.3.0"
-coverage = {version = "7.6.10", extras = ["toml"]}
-mypy = "1.14.1"
-pre-commit = "4.1.0"
-pre-commit-hooks = "5.0.0"
-pylint = "3.3.4"
-pytest = "8.3.4"
-pytest-asyncio = "0.25.3"
-pytest-cov = "6.0.0"
-ruff = "0.9.4"
-syrupy = "4.8.1"
-yamllint = "1.35.1"
+{%- for name, spec in versions.dev.items() %}
+{%- if spec is string %}
+{{ name }} = "{{ spec }}"
+{%- elif spec.version is defined and spec.extras is defined %}
+{{ name }} = { version = "{{ spec.version }}", extras = {{ spec.extras | tojson }} }
+{%- elif spec.version is defined %}
+{{ name }} = { version = "{{ spec.version }}" }
+{%- else %}
+{{ name }} = "{{ spec }}"
+{%- endif %}
+{%- endfor %}
 
 [tool.coverage.run]
 plugins = ["covdefaults"]

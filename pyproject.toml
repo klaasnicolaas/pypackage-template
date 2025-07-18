@@ -7,7 +7,8 @@ license = "MIT"
 requires-python = ">=3.11"
 readme = "README.md"
 dependencies = [
-  "copier==9.8.0",
+  "copier>=9.8.0",
+  "requests>=2.32.4",
 ]
 
 [dependency-groups]
