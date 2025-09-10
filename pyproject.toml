@@ -16,7 +16,7 @@ dev = [
   "codespell==2.4.1",
   "pre-commit==4.3.0",
   "pre-commit-hooks==6.0.0",
-  "ruff==0.12.12",
+  "ruff==0.13.0",
   "yamllint==1.37.1",
 ]
 
