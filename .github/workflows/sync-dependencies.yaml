@@ -18,7 +18,7 @@ jobs:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v5.0.0
       - name: 🏗 Set up UV
-        uses: astral-sh/setup-uv@v7.1.1
+        uses: astral-sh/setup-uv@v7.1.2
         with:
           version: "latest"
           enable-cache: true
