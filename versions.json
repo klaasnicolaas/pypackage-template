@@ -9,19 +9,19 @@
       "codespell": "2.4.1",
       "covdefaults": "2.3.0",
       "coverage": {
-        "version": "7.11.0",
+        "version": "7.11.3",
         "extras": [
           "toml"
         ]
       },
       "mypy": "1.18.2",
-      "pre_commit": "4.3.0",
+      "pre_commit": "4.4.0",
       "pre_commit_hooks": "6.0.0",
-      "pylint": "4.0.2",
-      "pytest": "8.4.2",
-      "pytest_asyncio": "1.2.0",
+      "pylint": "4.0.3",
+      "pytest": "9.0.1",
+      "pytest_asyncio": "1.3.0",
       "pytest_cov": "7.0.0",
-      "ruff": "0.14.3",
+      "ruff": "0.14.5",
       "syrupy": "5.0.0",
       "yamllint": "1.37.1"
     }
