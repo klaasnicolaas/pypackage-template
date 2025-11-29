@@ -118,6 +118,12 @@ This project uses [prek](https://github.com/j178/prek) to run some checks before
 uv run prek install
 ```
 
+To run all hooks manually without linting the `template/` workspace, run:
+
+```shell
+uv run prek run --all-files
+```
+
 ### Keep template dependencies up to date
 
 The [pyproject.toml](./template/pyproject.toml.j2) file of the template has a jinja2 extension and is therefore not seen by Renovate bot to update automatically. That's why I keep track of the dependencies separately in a [Gist](https://gist.github.com/klaasnicolaas/323975ac4f173087a979209cd1c8f202) and a [workflow](./.github/workflows/sync-dependencies.yaml) will check every week if anything needs to be adjusted.

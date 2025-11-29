@@ -7,6 +7,7 @@ repos:
         language: system
         types: [python]
         entry: uv run ruff check --fix
+        exclude: ^template/
         require_serial: true
         stages: [commit, push, manual]
       - id: ruff-format
@@ -14,6 +15,7 @@ repos:
         language: system
         types: [python]
         entry: uv run ruff format
+        exclude: ^template/
         require_serial: true
         stages: [commit, push, manual]
       - id: check-ast
