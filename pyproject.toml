@@ -1,10 +1,10 @@
 [project]
 name = "pypackage-template"
-version = "0.1.0"
+version = "0.0.0"
 description = "A template for generating a Python package"
 authors = [{ name="Klaas Schoute", email="hello@student-techlife.com"}]
 license = "MIT"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 readme = "README.md"
 dependencies = [
   "copier>=9.8.0",
@@ -14,8 +14,8 @@ dependencies = [
 [dependency-groups]
 dev = [
   "codespell==2.4.1",
-  "pre-commit==4.5.0",
   "pre-commit-hooks==6.0.0",
+  "prek==0.2.19",
   "ruff==0.14.6",
   "yamllint==1.37.1",
 ]
@@ -24,7 +24,7 @@ dev = [
 default-groups = []
 
 [tool.ruff]
-target-version = "py311"
+target-version = "py312"
 exclude = ["template"]
 lint.select = ["ALL"]
 lint.ignore = [
@@ -42,7 +42,6 @@ lint.ignore = [
 
   # Conflicts with the Ruff formatter
   "COM812",
-  "ISC001",
 
   # Custom ignores
   "G004",    # Allow f-string in logging
