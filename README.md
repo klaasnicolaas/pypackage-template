@@ -101,7 +101,7 @@ providing comprehensive management and control over project dependencies.
 
 You need at least:
 
-- [Python] 3.11+ - The programming language
+- [Python] 3.12+ - The programming language
 - [uv] - A python virtual environment/package manager
 
 Install all packages, including all development requirements:
@@ -110,12 +110,12 @@ Install all packages, including all development requirements:
 uv sync --dev
 ```
 
-### Pre-commit hooks
+### Prek hooks
 
-This project uses [pre-commit](https://pre-commit.com/) to run some checks before committing code. To install the pre-commit hooks, run the following command:
+This project uses [prek](https://github.com/j178/prek) to run some checks before committing code. To install the prek hooks, run the following command:
 
 ```shell
-uv run pre-commit install
+uv run prek install
 ```
 
 ### Keep template dependencies up to date

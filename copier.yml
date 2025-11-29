@@ -90,10 +90,10 @@ initial_commit:
   when: "{{ run_poetry_install == true }}"
   default: false
 
-# Pre-commit hooks - question
-setup_pre_commit:
+# Prek (hooks) - question
+setup_prek:
   type: bool
-  help: "Setup pre-commit hooks (requires pre-commit)?"
+  help: "Setup prek hooks (requires prek)?"
   when: "{{ run_poetry_install == true }}"
   default: false
 
@@ -120,5 +120,5 @@ _tasks:
   - "{% if initial_commit %}git init{% endif %}"
   - "{% if initial_commit %}git add .{% endif %}"
   - "{% if initial_commit %}git commit -m 'project - initial commit'{% endif %}"
-  # Setup pre-commit
-  - "{% if setup_pre_commit %}pre-commit install{% endif %}"
+  # Setup prek
+  - "{% if setup_prek %}prek install{% endif %}"
