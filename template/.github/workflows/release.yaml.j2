@@ -43,7 +43,7 @@ jobs:
         run: poetry install --no-interaction
       - name: 🏗 Set package version
         env:
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_TAG: {{ '${{ github.event.release.tag_name }}' }}
         run: |
           version="${RELEASE_TAG}"
           version="${version,,}"
