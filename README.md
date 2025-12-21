@@ -13,7 +13,7 @@ This project has been set up to quickly and easily set up a new Python package p
 * 🛡️ [Thrusted publishers][thrusted] for PyPI releases
 * 🐳 [Dev Containers][devcontainer] for easy development in VS Code
 * ⬆️ [Renovate Bot][renovate] for dependency updates
-* ✅ [mypy][mypy] for static type checking
+* ✅ [ty][ty] for static type checking
 * 🧪 [Pytest][pytest] for testing and code coverage
 * ✍️ [Ruff][ruff] for linting and code formatting
 * And much more!
@@ -135,7 +135,7 @@ Distributed under the **MIT** License. See [`LICENSE`](LICENSE) for more informa
 <!-- Links -->
 [copier]: https://copier.readthedocs.io/en/stable/
 [gh-actions]: https://github.com/features/actions
-[mypy]: https://mypy.readthedocs.io/en/stable/
+[ty]: https://docs.astral.sh/ty/
 [poetry]: https://python-poetry.org/
 [pytest]: https://docs.pytest.org/en/latest/
 [ruff]: https://beta.ruff.rs/docs/

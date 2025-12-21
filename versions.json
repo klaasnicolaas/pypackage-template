@@ -14,7 +14,6 @@
           "toml"
         ]
       },
-      "mypy": "1.19.1",
       "pre_commit_hooks": "6.0.0",
       "prek": "0.2.22",
       "pylint": "4.0.4",
@@ -23,6 +22,7 @@
       "pytest_cov": "7.0.0",
       "ruff": "0.14.9",
       "syrupy": "5.0.0",
+      "ty": "0.0.5",
       "yamllint": "1.37.1",
       "zizmor": "1.18.0"
     }
