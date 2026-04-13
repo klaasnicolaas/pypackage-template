@@ -27,7 +27,7 @@ jobs:
       - name: ♻️ Run update_versions.py
         run: uv run python scripts/update_versions.py
       - name: 👍 Commit & create PR if changed
-        uses: peter-evans/create-pull-request@v8.1.0
+        uses: peter-evans/create-pull-request@v8.1.1
         with:
           commit-message: "♻️ Update versions.json"
           title: "♻️ Update versions.json"
