@@ -16,7 +16,7 @@ jobs:
       pull-requests: write
     steps:
       - name: ⬇️ Checkout repository
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
       - name: 🏗 Set up UV
         uses: astral-sh/setup-uv@v8.1.0
         with:
