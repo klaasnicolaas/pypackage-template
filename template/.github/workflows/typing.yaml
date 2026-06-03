@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
         with:
           persist-credentials: false
       - name: 🏗 Set up Poetry
