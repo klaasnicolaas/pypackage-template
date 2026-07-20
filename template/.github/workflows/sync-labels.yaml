@@ -22,7 +22,7 @@ jobs:
       issues: write
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
       - name: 🚀 Run Label Syncer
