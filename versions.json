@@ -15,16 +15,16 @@
         ]
       },
       "pre_commit_hooks": "6.0.0",
-      "prek": "0.4.10",
+      "prek": "0.4.11",
       "pylint": "4.0.6",
       "pytest": "9.1.1",
       "pytest_asyncio": "1.4.0",
       "pytest_cov": "7.1.0",
-      "ruff": "0.15.22",
+      "ruff": "0.16.0",
       "syrupy": "5.5.3",
-      "ty": "0.0.61",
+      "ty": "0.0.63",
       "yamllint": "1.38.0",
-      "zizmor": "1.27.0"
+      "zizmor": "1.28.0"
     }
   }
 }
