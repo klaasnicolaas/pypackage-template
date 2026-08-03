@@ -9,7 +9,7 @@
       "codespell": "2.4.3",
       "covdefaults": "2.3.0",
       "coverage": {
-        "version": "7.15.2",
+        "version": "7.15.3",
         "extras": [
           "toml"
         ]
@@ -20,11 +20,11 @@
       "pytest": "9.1.1",
       "pytest_asyncio": "1.4.0",
       "pytest_cov": "7.1.0",
-      "ruff": "0.16.0",
+      "ruff": "0.16.1",
       "syrupy": "5.5.3",
-      "ty": "0.0.63",
+      "ty": "0.0.65",
       "yamllint": "1.38.0",
-      "zizmor": "1.28.0"
+      "zizmor": "1.29.0"
     }
   }
 }
