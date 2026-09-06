@@ -70,13 +70,13 @@ license = "
     {%- elif software_license == "zlib License" -%}
     Zlib
     {%- endif %}"
+license-files = ["LICENSE"]
 requires-python = ">=3.12"
 readme = "README.md"
 keywords = ["{{ package_name }}", "{{ project_slug }}", "api", "async", "client"]
 classifiers = [
   "Framework :: AsyncIO",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: {{ software_license }}",
   "Natural Language :: English",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
@@ -175,4 +175,4 @@ max-complexity = 25
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=2.2.0"]
