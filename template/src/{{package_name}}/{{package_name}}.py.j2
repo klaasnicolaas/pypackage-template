@@ -1,30 +1,33 @@
+{% set client_class = project_name.replace(" ", "").replace("-", "") -%}
 """Asynchronous Python client for {{ project_name }}."""
+
 from __future__ import annotations
 
 import asyncio
 import socket
 from dataclasses import dataclass
 from importlib import metadata
-from typing import Any, Self, cast
+from typing import Any, Self
 
 from aiohttp import ClientError, ClientSession
 from aiohttp.hdrs import METH_GET
 from yarl import URL
 
-from .exceptions import
-from .models import
+from .const import API_HOST, API_PATH
+from .exceptions import {{ client_class }}ConnectionError
 
-VERSION = metadata.version(__package__)
+VERSION: str = metadata.version(__package__)  # ty:ignore[invalid-argument-type]
 
 
 @dataclass
-class ...
+class {{ client_class }}:
     """Main class for handling connections with the {{ project_name }} API."""
 
     request_timeout: float = 10.0
     session: ClientSession | None = None
 
     _close_session: bool = False
+    _base_url = URL.build(scheme="https", host=API_HOST, path=API_PATH)
 
     async def _request(
         self,
@@ -33,28 +36,35 @@ class ...
         method: str = METH_GET,
         params: dict[str, Any] | None = None,
     ) -> Any:
-        """Handle a request to the {{ project_name }} API.
+        """Handle a request to the {{ project_name }} API."""
+        url = self._base_url.join(URL(uri))
 
-        Args:
-        ----
-            uri: Request URI, without '/api/', for example, 'status'.
-            method: HTTP method to use.
-            params: Extra options to improve or limit the response.
-
-        Returns:
-        -------
-            A Python dictionary (JSON decoded) with the response from
-            the {{ project_name }} API.
-
-        Raises:
-        ------
-            {{ project_name }}AuthenticationError: If the API key is invalid.
-
-        """
+        headers = {
+            "Accept": "application/json",
+            "User-Agent": f"Python{{ client_class }}/{VERSION}",
+        }
 
         if self.session is None:
             self.session = ClientSession()
             self._close_session = True
+
+        try:
+            async with asyncio.timeout(self.request_timeout):
+                response = await self.session.request(
+                    method,
+                    url,
+                    params=params,
+                    headers=headers,
+                )
+                response.raise_for_status()
+        except TimeoutError as exception:
+            msg = "Timeout occurred while connecting to the API."
+            raise {{ client_class }}ConnectionError(msg) from exception
+        except (ClientError, socket.gaierror) as exception:
+            msg = "Error occurred while communicating with the API."
+            raise {{ client_class }}ConnectionError(msg) from exception
+
+        return await response.json()
 
     async def close(self) -> None:
         """Close open client session."""
@@ -62,21 +72,9 @@ class ...
             await self.session.close()
 
     async def __aenter__(self) -> Self:
-        """Async enter.
-
-        Returns
-        -------
-            The {{ project_name }} object.
-
-        """
+        """Async enter."""
         return self
 
     async def __aexit__(self, *_exc_info: object) -> None:
-        """Async exit.
-
-        Args:
-        ----
-            _exc_info: Exec type.
-
-        """
+        """Async exit."""
         await self.close()

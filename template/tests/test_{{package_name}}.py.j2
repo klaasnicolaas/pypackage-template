@@ -1,13 +1,26 @@
+{% set client_class = project_name.replace(" ", "").replace("-", "") -%}
 """Basic tests for {{ project_name }}."""
-# pylint: disable=protected-access
-import asyncio
-from unittest.mock import patch
 
-import pytest
-from aiohttp import ClientError, ClientResponse, ClientSession
-from aresponses import Response, ResponsesMockServer
+from aresponses import ResponsesMockServer
 
-from {{ package_name }} import
-from {{ package_name }}.exceptions import
+from {{ package_name }} import {{ client_class }}
+from {{ package_name }}.const import API_HOST
 
-from . import load_fixtures
+
+async def test_json_request(aresponses: ResponsesMockServer) -> None:
+    """Test JSON response is handled correctly."""
+    aresponses.add(
+        API_HOST,
+        "/api/test",
+        "GET",
+        aresponses.Response(
+            status=200,
+            headers={"Content-Type": "application/json"},
+            text='{"status": "ok"}',
+        ),
+    )
+
+    async with {{ client_class }}() as client:
+        response = await client._request("test")
+
+    assert response == {"status": "ok"}
