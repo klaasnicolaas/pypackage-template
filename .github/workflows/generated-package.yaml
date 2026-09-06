@@ -23,10 +23,8 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-
       - name: 🏗 Install Copier and Poetry
         run: pipx install copier && pipx install poetry
-
       - name: 📦 Generate package from template
         run: |
           copier copy \
@@ -48,33 +46,26 @@ jobs:
             --data initial_commit=false \
             --data setup_prek=false \
             . generated-package
-
       - name: 🏗 Install generated package
         working-directory: generated-package
         run: poetry install --no-interaction
-
       - name: ✅ Validate package metadata
         working-directory: generated-package
         run: poetry check
-
       - name: 🐶 Run Ruff
         working-directory: generated-package
         run: |
           poetry run ruff check .
           poetry run ruff format --check .
-
       - name: 🆎 Run ty
         working-directory: generated-package
         run: poetry run ty check examples src tests
-
       - name: 🧪 Run tests
         working-directory: generated-package
         run: poetry run pytest -v --no-cov tests
-
       - name: 🏗 Build package
         working-directory: generated-package
         run: poetry build --no-interaction
-
       - name: 🔎 Verify wheel license metadata
         working-directory: generated-package
         run: |
