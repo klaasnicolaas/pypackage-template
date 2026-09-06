@@ -1,8 +1,10 @@
 """Test the models for {{ project_name }}."""
-import pytest
-from aiohttp import ClientSession
-from aresponses import ResponsesMockServer
 
-from {{ package_name }} import
+from {{ package_name }} import JSON
 
-from . import load_fixtures
+
+def test_json_model() -> None:
+    """Test the JSON type alias with a basic payload."""
+    payload: JSON = {"status": "ok"}
+
+    assert payload["status"] == "ok"
