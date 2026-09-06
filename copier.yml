@@ -65,17 +65,11 @@ kofi_username:
   help: "Ko-fi username"
   when: "{{ kofi_funding == true }}"
 
-# Tweet on release - question
-tweet_on_release:
+# Bluesky on release - question
+bluesky_on_release:
   type: bool
-  help: "Sending tweets on release?"
+  help: "Post new releases to Bluesky?"
   default: true
-
-# Twitter username - input
-twitter_username:
-  type: str
-  help: "Twitter username (without @)"
-  when: "{{ tweet_on_release == true }}"
 
 # Poetry install - question
 run_poetry_install:
