@@ -1,4 +1,4 @@
-{% set client_class = project_name.replace(" ", "").replace("-", "") %}
+{% set client_class = project_name.replace(" ", "").replace("-", "") -%}
 """Asynchronous Python client for {{ project_name }}."""
 
 from .exceptions import {{ client_class }}ConnectionError, {{ client_class }}Error
