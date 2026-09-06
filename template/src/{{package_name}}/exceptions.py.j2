@@ -1,5 +1,10 @@
+{% set client_class = project_name.replace(" ", "").replace("-", "") %}
 """Exceptions for {{ project_name }}."""
 
 
-class APIError(Exception):
-    """Base exception for {{ project_name }}."""
+class {{ client_class }}Error(Exception):
+    """Generic {{ project_name }} exception."""
+
+
+class {{ client_class }}ConnectionError({{ client_class }}Error):
+    """{{ project_name }} connection exception."""
