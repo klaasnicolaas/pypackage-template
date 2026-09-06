@@ -4,4 +4,8 @@
 from .exceptions import {{ client_class }}ConnectionError, {{ client_class }}Error
 from .{{ package_name }} import {{ client_class }}
 
-__all__ = ["{{ client_class }}", "{{ client_class }}ConnectionError", "{{ client_class }}Error"]
+__all__ = [
+    "{{ client_class }}",
+    "{{ client_class }}ConnectionError",
+    "{{ client_class }}Error",
+]
