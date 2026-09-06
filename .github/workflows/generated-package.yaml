@@ -69,7 +69,7 @@ jobs:
 
       - name: 🧪 Run tests
         working-directory: generated-package
-        run: poetry run pytest -v --cov src tests
+        run: poetry run pytest -v --no-cov tests
 
       - name: 🏗 Build package
         working-directory: generated-package
