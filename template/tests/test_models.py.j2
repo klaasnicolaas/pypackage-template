@@ -1,6 +1,8 @@
 """Test the models for {{ project_name }}."""
+from typing import TYPE_CHECKING
 
-from {{ package_name }} import JSON
+if TYPE_CHECKING:
+    from {{ package_name }} import JSON
 
 
 def test_json_model() -> None:
