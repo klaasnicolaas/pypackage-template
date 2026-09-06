@@ -47,23 +47,31 @@ software_license:
     - MIT License
     - Mozilla Public License 2.0
 
+# Community files inherited from the repository owner's public .github repository.
+use_community_defaults:
+  type: bool
+  help: "Use your account's central community templates and funding instead of local files?"
+  default: "{{ github_username == 'klaasnicolaas' }}"
+
 # GitHub Sponsors - question
 github_sponsors:
   type: bool
   help: "Use GitHub Sponsors?"
+  when: "{{ not use_community_defaults }}"
   default: true
 
 # Ko-fi sponsor - question
 kofi_funding:
   type: bool
   help: "Use Ko-fi?"
+  when: "{{ not use_community_defaults }}"
   default: true
 
 # Ko-fi username - input
 kofi_username:
   type: str
   help: "Ko-fi username"
-  when: "{{ kofi_funding == true }}"
+  when: "{{ not use_community_defaults and kofi_funding }}"
 
 # Bluesky on release - question
 bluesky_on_release:
@@ -101,13 +109,8 @@ _subdirectory: template
 _templates_suffix: .j2
 _message_after_copy: Your package "{{ package_name }}" has been created successfully!
 _tasks:
-  # Remove Github Sponsor line from FUNDING.yml
-  - "{% if not github_sponsors %}python -c \"f = '.github/FUNDING.yml'; open(f, 'w').writelines([l for l in open(f) if 'github:' not in l])\"{% endif %}"
-  # Remove Ko-fi line from FUNDING.yml
-  - "{% if not kofi_funding %}python -c \"f = '.github/FUNDING.yml'; open(f, 'w').writelines([l for l in open(f) if 'ko_fi:' not in l])\"{% endif %}"
-  # Remove FUNDING.yml if neither GitHub Sponsor nor Ko-fi is chosen
-  - "{% if not github_sponsors and not kofi_funding %}rm -f .github/FUNDING.yml{% endif %}"
-
+  # Remove local overrides so GitHub can use account community defaults.
+  - "{% if use_community_defaults %}rm -rf .github/ISSUE_TEMPLATE .github/PULL_REQUEST_TEMPLATE.md .github/FUNDING.yml{% endif %}"
   # Run poetry install
   - "{% if run_poetry_install %}poetry install{% endif %}"
   # Initial commit
