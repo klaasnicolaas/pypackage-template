@@ -1,0 +1,94 @@
+---
+name: Generated package
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+    paths:
+      - "copier.yml"
+      - "versions.json"
+      - "template/**"
+      - ".github/workflows/generated-package.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke-test:
+    name: Generate and validate package
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: 🏗 Install Copier and Poetry
+        run: pipx install copier && pipx install poetry
+
+      - name: 📦 Generate package from template
+        run: |
+          copier copy \
+            --trust \
+            --data-file versions.json \
+            --defaults \
+            --data author_name="Template Test" \
+            --data author_email="template@example.com" \
+            --data github_username="template-test" \
+            --data project_name="Template Smoke Test" \
+            --data project_slug="template-smoke-test" \
+            --data package_name="template_smoke_test" \
+            --data project_short_description="Generated package smoke test" \
+            --data software_license="MIT License" \
+            --data github_sponsors=false \
+            --data kofi_funding=false \
+            --data bluesky_on_release=true \
+            --data run_poetry_install=false \
+            --data initial_commit=false \
+            --data setup_prek=false \
+            . generated-package
+
+      - name: 🏗 Install generated package
+        working-directory: generated-package
+        run: poetry install --no-interaction
+
+      - name: ✅ Validate package metadata
+        working-directory: generated-package
+        run: poetry check
+
+      - name: 🐶 Run Ruff
+        working-directory: generated-package
+        run: |
+          poetry run ruff check .
+          poetry run ruff format --check .
+
+      - name: 🆎 Run ty
+        working-directory: generated-package
+        run: poetry run ty check examples src tests
+
+      - name: 🧪 Run tests
+        working-directory: generated-package
+        run: poetry run pytest -v --cov src tests
+
+      - name: 🏗 Build package
+        working-directory: generated-package
+        run: poetry build --no-interaction
+
+      - name: 🔎 Verify wheel license metadata
+        working-directory: generated-package
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+
+          wheel = next(Path("dist").glob("*.whl"))
+          with ZipFile(wheel) as archive:
+              metadata_name = next(
+                  name for name in archive.namelist() if name.endswith(".dist-info/METADATA")
+              )
+              metadata = archive.read(metadata_name).decode()
+
+          assert "License-Expression: MIT" in metadata
+          assert "License-File: LICENSE" in metadata
+          PY
