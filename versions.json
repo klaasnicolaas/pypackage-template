@@ -16,7 +16,6 @@
       },
       "pre_commit_hooks": "6.0.0",
       "prek": "0.5.0",
-      "pylint": "4.0.8",
       "pytest": "9.1.1",
       "pytest_asyncio": "1.4.0",
       "pytest_cov": "7.1.0",
