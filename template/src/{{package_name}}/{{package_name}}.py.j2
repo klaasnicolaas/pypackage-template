@@ -1,26 +1,33 @@
+{% set client_class = project_name.replace(" ", "").replace("-", "") %}
 """Asynchronous Python client for {{ project_name }}."""
+
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Any, Self, cast
+import asyncio
+import socket
+from dataclasses import dataclass
+from importlib import metadata
+from typing import Any, Self
 
 from aiohttp import ClientError, ClientSession
 from aiohttp.hdrs import METH_GET
 from yarl import URL
 
-from .exceptions import APIError
-from .models import JSON
+from .const import API_HOST, API_PATH
+from .exceptions import {{ client_class }}ConnectionError
+
+VERSION: str = metadata.version(__package__)  # ty:ignore[invalid-argument-type]
 
 
 @dataclass
-class Client:
-    """Main client for handling connections with the {{ project_name }} API."""
+class {{ client_class }}:
+    """Main class for handling connections with the {{ project_name }} API."""
 
-    base_url: URL = field(default_factory=lambda: URL("https://example.com"))
     request_timeout: float = 10.0
     session: ClientSession | None = None
 
     _close_session: bool = False
+    _base_url = URL.build(scheme="https", host=API_HOST, path=API_PATH)
 
     async def _request(
         self,
@@ -28,35 +35,46 @@ class Client:
         *,
         method: str = METH_GET,
         params: dict[str, Any] | None = None,
-    ) -> JSON:
+    ) -> Any:
         """Handle a request to the {{ project_name }} API."""
+        url = self._base_url.join(URL(uri))
+
+        headers = {
+            "Accept": "application/json",
+            "User-Agent": f"Python{{ client_class }}/{VERSION}",
+        }
+
         if self.session is None:
             self.session = ClientSession()
             self._close_session = True
 
-        url = self.base_url / uri.lstrip("/")
-
         try:
-            async with self.session.request(
-                method,
-                url,
-                params=params,
-                timeout=self.request_timeout,
-            ) as response:
+            async with asyncio.timeout(self.request_timeout):
+                response = await self.session.request(
+                    method,
+                    url,
+                    params=params,
+                    headers=headers,
+                )
                 response.raise_for_status()
-                return cast("JSON", await response.json())
-        except (TimeoutError, ClientError) as err:
-            raise APIError from err
+        except TimeoutError as exception:
+            msg = "Timeout occurred while connecting to the API."
+            raise {{ client_class }}ConnectionError(msg) from exception
+        except (ClientError, socket.gaierror) as exception:
+            msg = "Error occurred while communicating with the API."
+            raise {{ client_class }}ConnectionError(msg) from exception
+
+        return await response.json()
 
     async def close(self) -> None:
-        """Close the client session if it was created by this client."""
+        """Close open client session."""
         if self.session and self._close_session:
             await self.session.close()
 
     async def __aenter__(self) -> Self:
-        """Return the client as an async context manager."""
+        """Async enter."""
         return self
 
     async def __aexit__(self, *_exc_info: object) -> None:
-        """Close the client when leaving the async context manager."""
+        """Async exit."""
         await self.close()
