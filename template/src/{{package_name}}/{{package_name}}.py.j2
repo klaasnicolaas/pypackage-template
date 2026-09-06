@@ -1,7 +1,7 @@
 """Asynchronous Python client for {{ project_name }}."""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any, Self, cast
 
 from aiohttp import ClientError, ClientSession
@@ -16,7 +16,7 @@ from .models import JSON
 class Client:
     """Main client for handling connections with the {{ project_name }} API."""
 
-    base_url: URL = URL("https://example.com")
+    base_url: URL = field(default_factory=lambda: URL("https://example.com"))
     request_timeout: float = 10.0
     session: ClientSession | None = None
 
@@ -44,7 +44,7 @@ class Client:
                 timeout=self.request_timeout,
             ) as response:
                 response.raise_for_status()
-                return cast(JSON, await response.json())
+                return cast("JSON", await response.json())
         except (TimeoutError, ClientError) as err:
             raise APIError from err
 
