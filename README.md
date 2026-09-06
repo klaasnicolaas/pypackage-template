@@ -11,6 +11,7 @@ This project has been set up to quickly and easily set up a new Python package p
 * ♻️ [GitHub Actions][gh-actions] for continuous integration and publishing to PyPI
 * 📦 [Poetry][poetry] for dependency management and packaging
 * 🛡️ [Thrusted publishers][thrusted] for PyPI releases
+* 🦋 Optional Bluesky posts for new releases
 * 🐳 [Dev Containers][devcontainer] for easy development in VS Code
 * ⬆️ [Renovate Bot][renovate] for dependency updates
 * ✅ [ty][ty] for static type checking
@@ -26,7 +27,7 @@ Ensure you have copier installed via [`pipx`](https://github.com/pypa/pipx):
 pipx install copier
 ```
 
-Decide where you want to create your new project, run the following command and answer all the questions:
+Decide where you want to create a new project, run the following command and answer all the questions:
 
 ```shell
 copier copy --trust --data-file versions.json gh:klaasnicolaas/pypackage-template ~/path/to/destination
@@ -53,7 +54,12 @@ A [GitHub workflow](template/.github/workflows/release.yaml.j2) is included that
 - Add a [Trusted Publisher](https://docs.pypi.org/trusted-publishers/creating-a-project-through-oidc/) to your PyPI account.
 - Create an Environment in the GitHub repository settings and name it "`release`".
 
-Now, when you [create a new release](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository#creating-a-release) from your repository, a workflow will run and deploy the code to PyPI.
+When Bluesky release posting is enabled (the default), also add these secrets to the `release` environment:
+
+- `BLUESKY_IDENTIFIER`: the Bluesky account identifier used for release posts.
+- `BLUESKY_PASSWORD`: an app password for that Bluesky account.
+
+Now, when you [create a new release](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository#creating-a-release) from your repository, a workflow will publish the package to PyPI and, when enabled, post the release to Bluesky.
 
 ## Unit test coverage
 
