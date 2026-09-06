@@ -86,6 +86,14 @@ After this Renovate will create a GitHub issue in your repository which serves a
 
 Automatically generate release notes with the [Release Drafter](https://github.com/release-drafter/release-drafter) workflow. This uses the labels from issues and pull requests to draft pretty and detailed release notes for your GitHub releases.
 
+## Shared GitHub configuration
+
+Release Drafter uses the repository owner's `.github` defaults when no local release configuration exists. For `klaasnicolaas`, this is [klaasnicolaas/.github](https://github.com/klaasnicolaas/.github). The release workflow remains in the generated package.
+
+Labels are synchronized centrally: add each newly generated repository to the target list in `.github` and grant the central label token access. Packages no longer contain a local label blueprint or sync workflow.
+
+Renovate uses the shared Python preset through its local `extends` reference. For another owner, configure that owner's Release Drafter defaults and label synchronization, and review the Renovate preset reference. See the [central configuration guide](https://github.com/klaasnicolaas/.github#readme).
+
 ## Updating
 
 Future boilerplate updates can be as simple as:
