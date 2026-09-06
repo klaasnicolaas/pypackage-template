@@ -1,47 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "timezone": "Europe/Amsterdam",
-  "schedule": ["before 6am every weekday"],
-  "rebaseWhen": "behind-base-branch",
-  "dependencyDashboard": true,
-  "labels": ["dependencies"],
-  "lockFileMaintenance": {
-    "enabled": true,
-    "automerge": true
-  },
-  "commitMessagePrefix": "⬆️",
+  "extends": [
+    "github>klaasnicolaas/.github:renovate-python"
+  ],
   "github-actions": {
     "managerFilePatterns": [
       "/^(workflow-templates|(template/)?\\.github/workflows)/[^/]+\\.ya?ml$/",
       "/(^|/)action\\.ya?ml$/"
     ]
-  },
-  "packageRules": [
-    {
-      "matchManagers": ["pep621"],
-      "addLabels": ["python"]
-    },
-    {
-      "matchManagers": ["pep621"],
-      "matchDepTypes": ["dev"],
-      "rangeStrategy": "pin"
-    },
-    {
-      "matchManagers": ["pep621"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "addLabels": ["github_actions"],
-      "rangeStrategy": "pin",
-      "extractVersion": "^(?<version>v\\d+\\.\\d+\\.\\d+)$",
-      "versioning": "regex:^v(?<major>\\d+)(\\.(?<minor>\\d+)\\.(?<patch>\\d+))?$"
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
-    }
-  ]
+  }
 }
