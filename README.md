@@ -88,6 +88,10 @@ Automatically generate release notes with the [Release Drafter](https://github.c
 
 ## Shared GitHub configuration
 
+For personal packages, `use_community_defaults` defaults to true: GitHub inherits the owner's funding, issue forms and PR template. No local community files are kept in that mode, including the repository-specific Discussions contact link. Set the option to false to keep local templates and choose funding per package. Other owners default to local files and can opt in once their own `.github` defaults exist.
+
+On an existing project, choosing central defaults removes its local issue-template folder, PR template and funding file. Review any custom forms or links before enabling it; GitHub cannot combine local issue configuration with inherited forms. This template repository retains its GitHub-only funding override.
+
 Release Drafter uses the repository owner's `.github` defaults when no local release configuration exists. For `klaasnicolaas`, this is [klaasnicolaas/.github](https://github.com/klaasnicolaas/.github). The release workflow remains in the generated package.
 
 Labels are synchronized centrally: add each newly generated repository to the target list in `.github` and grant the central label token access. Packages no longer contain a local label blueprint or sync workflow.
