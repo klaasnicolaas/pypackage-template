@@ -1,7 +1,7 @@
 """Asynchronous Python client for {{ project_name }}."""
 
-from .{{ package_name }} import Client
 from .exceptions import APIError
 from .models import JSON
+from .{{ package_name }} import Client
 
-__all__ = ["APIError", "Client", "JSON"]
+__all__ = ["JSON", "APIError", "Client"]
