@@ -1,9 +1,9 @@
 ---
-{% if github_sponsors %}
+{% if github_sponsors -%}
 github: {{ github_username }}
-{% elif not kofi_funding %}
+{% elif not kofi_funding -%}
 github: []
-{% endif %}
-{% if kofi_funding %}
+{% endif -%}
+{% if kofi_funding -%}
 ko_fi: {{ kofi_username }}
-{% endif %}
+{% endif -%}
