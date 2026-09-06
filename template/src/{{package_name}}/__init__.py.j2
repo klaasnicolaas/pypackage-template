@@ -1,7 +1,7 @@
+{% set client_class = project_name.replace(" ", "").replace("-", "") %}
 """Asynchronous Python client for {{ project_name }}."""
 
-from .exceptions import APIError
-from .models import JSON
-from .{{ package_name }} import Client
+from .exceptions import {{ client_class }}ConnectionError, {{ client_class }}Error
+from .{{ package_name }} import {{ client_class }}
 
-__all__ = ["JSON", "APIError", "Client"]
+__all__ = ["{{ client_class }}", "{{ client_class }}ConnectionError", "{{ client_class }}Error"]
