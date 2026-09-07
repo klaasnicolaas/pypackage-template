@@ -15,13 +15,13 @@
         ]
       },
       "pre_commit_hooks": "6.0.0",
-      "prek": "0.5.0",
+      "prek": "0.5.2",
       "pytest": "9.1.1",
       "pytest_asyncio": "1.4.0",
       "pytest_cov": "7.1.0",
-      "ruff": "0.16.5",
+      "ruff": "0.16.6",
       "syrupy": "6.0.0",
-      "ty": "0.0.75",
+      "ty": "0.0.78",
       "yamllint": "1.38.0",
       "zizmor": "1.30.0"
     }
