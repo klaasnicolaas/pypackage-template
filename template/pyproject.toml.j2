@@ -2,8 +2,8 @@
 name = "{{ package_name }}"
 version = "0.0.0"
 description = "{{ project_short_description }}"
-authors = [{ name="{{ author_name }}", email="<{{ author_email }}>"}]
-maintainers = [{name="{{ author_name }}", email="<{{ author_email }}>"}]
+authors = [{ name="{{ author_name }}", email="{{ author_email }}"}]
+maintainers = [{name="{{ author_name }}", email="{{ author_email }}"}]
 license = "
     {%- if software_license == "Apache License 2.0" -%}
     Apache-2.0
@@ -84,16 +84,11 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-dynamic = ["dependencies"]
-packages = [
-  { include = "{{ package_name }}", from = "src"},
-]
-
-[tool.poetry.dependencies]
-python = "^3.12"
+dependencies = [
 {%- for name, spec in versions.main.items() %}
-{{ name }} = "{{ spec }}"
+  "{{ name }}{{ spec }}",
 {%- endfor %}
+]
 
 [project.urls]
 homepage = "https://github.com/{{ github_username }}/python-{{ project_slug }}"
@@ -102,18 +97,18 @@ documentation = "https://github.com/{{ github_username }}/python-{{ project_slug
 "Bug Tracker" = "https://github.com/{{ github_username }}/python-{{ project_slug }}/issues"
 Changelog = "https://github.com/{{ github_username }}/python-{{ project_slug }}/releases"
 
-[tool.poetry.group.dev.dependencies]
+[dependency-groups]
+dev = [
 {%- for name, spec in versions.dev.items() %}
 {%- if spec is string %}
-{{ name }} = "{{ spec }}"
+  "{{ name }}=={{ spec }}",
 {%- elif spec.version is defined and spec.extras is defined %}
-{{ name }} = { version = "{{ spec.version }}", extras = {{ spec.extras | tojson }} }
+  "{{ name }}[{{ spec.extras | join(',') }}]=={{ spec.version }}",
 {%- elif spec.version is defined %}
-{{ name }} = { version = "{{ spec.version }}" }
-{%- else %}
-{{ name }} = "{{ spec }}"
+  "{{ name }}=={{ spec.version }}",
 {%- endif %}
 {%- endfor %}
+]
 
 [tool.coverage.run]
 plugins = ["covdefaults"]
@@ -153,5 +148,10 @@ known-first-party = ["{{ package_name }}"]
 max-complexity = 25
 
 [build-system]
+{%- if software_license in ["GNU General Public License v3.0", "GNU Lesser General Public License v3.0"] %}
 build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core>=2.2.0"]
+{%- else %}
+build-backend = "uv_build"
+requires = ["uv_build>=0.12.13,<0.13"]
+{%- endif %}
