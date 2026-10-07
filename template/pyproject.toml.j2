@@ -40,11 +40,11 @@ license = "
     {%- elif software_license == "GNU General Public License v2.0" -%}
     GPL-2.0
     {%- elif software_license == "GNU General Public License v3.0" -%}
-    GPL-3.0
+    GPL-3.0-only
     {%- elif software_license == "GNU Lesser General Public License v2.1" -%}
     LGPL-2.1
     {%- elif software_license == "GNU Lesser General Public License v3.0" -%}
-    LGPL-3.0
+    LGPL-3.0-only
     {%- elif software_license == "ISC License" -%}
     ISC
     {%- elif software_license == "LaTeX Project Public License v1.3c" -%}
@@ -148,10 +148,5 @@ known-first-party = ["{{ package_name }}"]
 max-complexity = 25
 
 [build-system]
-{%- if software_license in ["GNU General Public License v3.0", "GNU Lesser General Public License v3.0"] %}
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core>=2.2.0"]
-{%- else %}
 build-backend = "uv_build"
 requires = ["uv_build>=0.12.13,<0.13"]
-{%- endif %}

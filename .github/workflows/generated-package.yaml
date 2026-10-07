@@ -24,8 +24,8 @@ jobs:
         bluesky: [true, false]
         license:
           - {name: "MIT License", spdx: "MIT"}
-          - {name: "GNU General Public License v3.0", spdx: "GPL-3.0"}
-          - {name: "GNU Lesser General Public License v3.0", spdx: "LGPL-3.0"}
+          - {name: "GNU General Public License v3.0", spdx: "GPL-3.0-only"}
+          - {name: "GNU Lesser General Public License v3.0", spdx: "LGPL-3.0-only"}
     steps:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
