@@ -9,7 +9,7 @@ This project has been set up to quickly and easily set up a new Python package p
 ## Feature Summary
 
 * ♻️ [GitHub Actions][gh-actions] for continuous integration and publishing to PyPI
-* 📦 [Poetry][poetry] for dependency management and packaging
+* 📦 [uv][uv] for dependency management and packaging
 * 🛡️ [Thrusted publishers][thrusted] for PyPI releases
 * 🦋 Optional Bluesky posts for new releases
 * 🐳 [Dev Containers][devcontainer] for easy development in VS Code
@@ -154,7 +154,7 @@ Distributed under the **MIT** License. See [`LICENSE`](LICENSE) for more informa
 [copier]: https://copier.readthedocs.io/en/stable/
 [gh-actions]: https://github.com/features/actions
 [ty]: https://docs.astral.sh/ty/
-[poetry]: https://python-poetry.org/
+[uv]: https://docs.astral.sh/uv//
 [pytest]: https://docs.pytest.org/en/latest/
 [ruff]: https://beta.ruff.rs/docs/
 [thrusted]: https://docs.pypi.org/trusted-publishers/using-a-publisher/

@@ -18,20 +18,31 @@ jobs:
   smoke-test:
     name: Generate and validate package
     runs-on: ubuntu-latest
+    # Pull requests use one representative configuration. Run manually for full coverage.
     strategy:
       matrix:
-        community_defaults: [true, false]
+        community_defaults: ${{ fromJSON(github.event_name == 'workflow_dispatch' && '[true,false]' || '[true]') }}
+        bluesky: ${{ fromJSON(github.event_name == 'workflow_dispatch' && '[true,false]' || '[false]') }}
+        license: ${{ fromJSON(github.event_name == 'workflow_dispatch' && '[{"name":"MIT License","spdx":"MIT"},{"name":"GNU General Public License v3.0","spdx":"GPL-3.0-only"},{"name":"GNU Lesser General Public License v3.0","spdx":"LGPL-3.0-only"}]' || '[{"name":"MIT License","spdx":"MIT"}]') }}
     steps:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: 🏗 Install Copier and Poetry
-        run: pipx install copier && pipx install poetry
+      - name: 🏗 Set up uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - name: 🐍 Install Python
+        run: uv python install
+      - name: 🏗 Install Copier
+        run: uv sync --locked
       - name: 📦 Generate package from template
         run: |
-          copier copy \
+          uv run copier copy \
             --trust \
+            --vcs-ref HEAD \
             --data-file versions.json \
             --defaults \
             --data author_name="Template Test" \
@@ -41,39 +52,42 @@ jobs:
             --data project_slug="template-smoke-test" \
             --data package_name="template_smoke_test" \
             --data project_short_description="Generated package smoke test" \
-            --data software_license="MIT License" \
+            --data software_license="${{ matrix.license.name }}" \
             --data use_community_defaults=${{ matrix.community_defaults }} \
             --data github_sponsors=false \
             --data kofi_funding=false \
-            --data bluesky_on_release=true \
-            --data run_poetry_install=false \
+            --data bluesky_on_release=${{ matrix.bluesky }} \
+            --data run_uv_sync=false \
             --data initial_commit=false \
             --data setup_prek=false \
             . generated-package
       - name: 🏗 Install generated package
         working-directory: generated-package
-        run: poetry install --no-interaction
+        run: uv sync --locked
       - name: ✅ Validate package metadata
         working-directory: generated-package
-        run: poetry check
+        run: uv lock --check
       - name: 🐶 Run Ruff
         working-directory: generated-package
         run: |
-          poetry run ruff check .
-          poetry run ruff format --check .
+          uv run ruff check .
+          uv run ruff format --check .
       - name: 🆎 Run ty
         working-directory: generated-package
-        run: poetry run ty check examples src tests
+        run: uv run ty check examples src tests
       - name: 🧪 Run tests
         working-directory: generated-package
-        run: poetry run pytest -v --no-cov tests
+        run: uv run pytest -v --no-cov tests
       - name: 🏗 Build package
         working-directory: generated-package
-        run: poetry build --no-interaction
+        run: uv build --no-sources
       - name: 🔎 Verify wheel license metadata
         working-directory: generated-package
+        env:
+          EXPECTED_LICENSE: ${{ matrix.license.spdx }}
         run: |
           python - <<'PY'
+          import os
           from pathlib import Path
           from zipfile import ZipFile
 
@@ -84,6 +98,13 @@ jobs:
               )
               metadata = archive.read(metadata_name).decode()
 
-          assert "License-Expression: MIT" in metadata
+          assert f"License-Expression: {os.environ['EXPECTED_LICENSE']}" in metadata
           assert "License-File: LICENSE" in metadata
           PY
+      - name: 📦 Verify wheel installation
+        working-directory: generated-package
+        run: |
+          uv venv --python 3.12 wheel-check
+          uv pip install --python wheel-check/bin/python dist/*.whl
+          cd /tmp
+          "${GITHUB_WORKSPACE}/generated-package/wheel-check/bin/python" -c 'import template_smoke_test; from importlib.metadata import version; assert version("template_smoke_test") == "0.0.0"'

@@ -9,7 +9,7 @@ repos:
         entry: uv run ruff check --fix
         exclude: ^template/
         require_serial: true
-        stages: [commit, push, manual]
+        stages: [pre-commit, pre-push, manual]
       - id: ruff-format
         name: 🐶 Ruff Formatter
         language: system
@@ -17,7 +17,7 @@ repos:
         entry: uv run ruff format
         exclude: ^template/
         require_serial: true
-        stages: [commit, push, manual]
+        stages: [pre-commit, pre-push, manual]
       - id: check-ast
         name: 🐍 Check Python AST
         language: system
@@ -37,7 +37,7 @@ repos:
         language: system
         types: [text, executable]
         entry: uv run check-executables-have-shebangs
-        stages: [commit, push, manual]
+        stages: [pre-commit, pre-push, manual]
       - id: check-json
         name: ｛ Check JSON files
         language: system
@@ -78,7 +78,7 @@ repos:
         language: system
         types: [text]
         entry: uv run end-of-file-fixer
-        stages: [commit, push, manual]
+        stages: [pre-commit, pre-push, manual]
       - id: no-commit-to-branch
         name: 🛑 Don't commit to main branch
         language: system
@@ -92,7 +92,7 @@ repos:
         language: system
         types: [text]
         entry: uv run trailing-whitespace-fixer
-        stages: [commit, push, manual]
+        stages: [pre-commit, pre-push, manual]
       - id: yamllint
         name: 🎗 Check YAML files with yamllint
         language: system
