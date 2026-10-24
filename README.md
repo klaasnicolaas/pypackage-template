@@ -122,8 +122,6 @@ You need at least:
 - [Python] 3.13+ - The programming language
 - [uv] - A python virtual environment/package manager
 
-We support the latest three stable Python minor versions: 3.13, 3.14 and 3.15. Python 3.12 support is dropped in the next release.
-
 Install all packages, including all development requirements:
 
 ```shell
