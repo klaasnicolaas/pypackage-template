@@ -119,7 +119,7 @@ providing comprehensive management and control over project dependencies.
 
 You need at least:
 
-- [Python] 3.12+ - The programming language
+- [Python] 3.13+ - The programming language
 - [uv] - A python virtual environment/package manager
 
 Install all packages, including all development requirements:
