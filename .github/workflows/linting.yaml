@@ -19,6 +19,7 @@ jobs:
         with:
           version: "latest"
           enable-cache: true
+          python-version: "3.13"
       - name: 🏗 Install project dependencies
         run: uv sync --all-extras --dev
       - name: 🚀 Run ruff linter
@@ -37,6 +38,7 @@ jobs:
         with:
           version: "latest"
           enable-cache: true
+          python-version: "3.13"
       - name: 🏗 Install project dependencies
         run: uv sync --all-extras --dev
       - name: 🚀 Check Python AST
